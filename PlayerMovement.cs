@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject _Player;
     public Animator _movement;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void _AttackLeft()
     {
+        GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
         _movement.SetBool("AttackOff", false);
         _Player.transform.rotation = Quaternion.Euler(0,270,0);
         _movement.SetBool("AttackOn", true);
@@ -28,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void _AttackRight()
     {
+        GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
         _movement.SetBool("AttackOff", false);
         _Player.transform.rotation = Quaternion.Euler(0,90,0);
         _movement.SetBool("AttackOn", true);
@@ -36,9 +40,18 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator _time()
     {
-        yield return new WaitForSecondsRealtime(0.8f);
+        yield return new WaitForSecondsRealtime(0.4f);
+        GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = false;
+        _Player.transform.rotation = Quaternion.Euler(0,180,0);
         _movement.SetBool("AttackOff", true);
         _movement.SetBool("AttackOn", false);
-        _Player.transform.rotation = Quaternion.Euler(0,180,0);
+    }
+
+    private void OnTriggerEnter(Collider _Enemy)
+    {
+        if (_Enemy.gameObject.tag == "Enemy")
+        {
+            Debug.Log("<color=red>PlayerDie GameOver</color>");
+        }
     }
 }
