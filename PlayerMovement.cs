@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private float turnSmoothVelocity = 0.2f;
     private bool PlayerDie = false;
     private bool movementPlayer = true;
+    private bool roll = false;
+    private bool swordOn = false;
     //private float turnSmoothTime = 0.2f;
     [SerializeField] private GameObject _Sword = null;
     [SerializeField] private GameObject _Archer = null;
@@ -27,16 +29,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("UpdteTargetEnemy",0f,0.5f);
+        InvokeRepeating("UpdateTargetEnemy",0f,0.5f);
         HealthBarPlayer.maxValue = 100;
         HealthBarPlayer.value = Hp;
     }
 
-    void UpdteTargetEnemy()
+    void UpdateTargetEnemy()
     { 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         float shortestDistance = Mathf.Infinity;
-        GameObject nearestEnemy = null;
+        GameObject nearestEnemy = GameObject.Find("Attack");
         foreach (GameObject enemy in enemies)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
@@ -44,10 +46,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
-            }
-            else
-            {
-                target = null;
             }
         }
 
@@ -61,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         _joystick = GameObject.FindWithTag("Joystick").GetComponent<FixedJoystick>();
+        target = GameObject.Find("Attack").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -85,9 +84,10 @@ public class PlayerMovement : MonoBehaviour
         if (_Sword.activeSelf == true)
         {
             _movement.SetBool("AttackSword", true);
-            GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
+            //GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
             StartCoroutine(_time());
             _Archer.SetActive(false);
+            swordOn = true;
         }
         else
         {
@@ -96,8 +96,9 @@ public class PlayerMovement : MonoBehaviour
             _movement.SetBool("InpactArcher", false);
             _movement.SetBool("IdleF", false);
             _Sword.SetActive(true);
-            GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
+            //GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
             StartCoroutine(_time());
+            swordOn = true;
         }
         TargetAttack();
         movementPlayer = false;
@@ -132,16 +133,38 @@ public class PlayerMovement : MonoBehaviour
         //UpdteTargetEnemy();
     }
 
+    public void _rollPlayer()
+    {
+        if (roll == true)
+        {
+            GameObject.Find("Roll").GetComponent<Button>().enabled = false;
+            _movement.SetBool("Roll", true);
+            StartCoroutine(_timeroll());
+        }
+        
+    }
+
+    IEnumerator _timeroll()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+        _movement.SetBool("Roll", false);
+        yield return new WaitForSecondsRealtime(0.4f);
+        GameObject.Find("Roll").GetComponent<Button>().enabled = true;
+    }
+
     IEnumerator _time()
     {
         yield return new WaitForSecondsRealtime(0.4f);
-        _Sword.GetComponent<BoxCollider>().enabled = false;
         _movement.SetBool("AttackSword", false);
         _movement.SetBool("AttackArcher", false);
         _movement.SetBool("Idle", true);
         _movement.SetBool("IdleF", true);
+        target = GameObject.Find("Attack").GetComponent<Transform>();
         yield return new WaitForSecondsRealtime(0.3f);
+        _Sword.GetComponent<BoxCollider>().enabled = false;
+        swordOn = false;
         movementPlayer = true;
+
     }
 
     IEnumerator _SpawnArrow()
@@ -178,6 +201,10 @@ public class PlayerMovement : MonoBehaviour
         Quaternion rotationToTarget = Quaternion.LookRotation(directionToTarget);
         Vector3 rotation = rotationToTarget.eulerAngles;
         transform.rotation = Quaternion.Euler(0f, rotation.y,0f);
+        if (swordOn == true)
+        {
+            GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
+        }
         //gameObject.transform.rotation = rotationToTarget;
     }
 
@@ -192,9 +219,11 @@ public class PlayerMovement : MonoBehaviour
                 transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, speedPlayer * Time.deltaTime);
                 transform.Translate(transform.forward * speedPlayer * Time.deltaTime, Space.World);
                 _movement.SetBool("Run", true);
+                roll = true;
             }
             else
             {
+                roll = false;
                 _movement.SetBool("Run", false);
                 _movement.SetBool("Idle", true);
             }

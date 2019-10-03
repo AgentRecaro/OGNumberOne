@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
-{
+{ 
 
     private bool enemyDie = false;
     [SerializeField] private GameObject _player;
@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _player = GameObject.Find("Player");
-       
     }
 
     // Update is called once per frame
