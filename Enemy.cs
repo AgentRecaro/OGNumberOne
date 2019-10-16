@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _score = 0;
     [SerializeField] private float _distancePlay;
     [SerializeField] private Animator _animator = null;
-    [SerializeField] private float _speed = 3;
+    [SerializeField] private float _speed = 2;
     [SerializeField] private int _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _player = GameObject.Find("Player");
+        //_animator = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -28,22 +29,26 @@ public class Enemy : MonoBehaviour
         Enemydie();
         transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
         _distancePlay = Vector3.Distance(_player.transform.position,transform.position);
-        if (_distancePlay <= 1)
+        if (_distancePlay <= 2)
         {
             _animator.SetBool("AttackOn", true);
             _animator.SetBool("Run", false);
+            _animator.SetBool("Idle",false);
             StartCoroutine(_time());
             _speed = 0;
         }
         else
         {
+            GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
             _animator.SetBool("AttackOn", false);
             _animator.SetBool("Run", true);
-            _speed = 3;
+            _animator.SetBool("Idle",false);
+            StartCoroutine(_timeAttack());
         }
 
         if (_Hp <= 0)
         {
+            GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
             _animator.SetBool("Die", true);
             _animator.SetBool("AttackOn", false);
             _animator.SetBool("Run", false);
@@ -53,6 +58,9 @@ public class Enemy : MonoBehaviour
             gameObject.tag = "Untagged";
             Destroy(gameObject, 5);
             _speed = 0;
+            EnemyCount.CountEnemydie = EnemyCount.CountEnemydie + 1;
+            GetComponent<Enemy>().enabled = false;
+
         }
 
         if (PlayerMovement.Hp <= 0)
@@ -86,8 +94,17 @@ public class Enemy : MonoBehaviour
 
     IEnumerator _time()
     {
-        yield return new WaitForSecondsRealtime(0.8f);
-        _animator.SetBool("Idle", true);
+        yield return new WaitForSecondsRealtime(0.9f);
+        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = true;
+        yield return new WaitForSecondsRealtime(0.5f);
+        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
+        //_animator.SetBool("Idle", true);
+    }
+
+    IEnumerator _timeAttack()
+    {
+        yield return new WaitForSecondsRealtime(1.1f);
+        _speed = 2;
     }
 
     void Enemydie()
