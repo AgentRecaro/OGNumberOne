@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject _Arrow = null;
     [SerializeField] private float speedPlayer = 0;
     [SerializeField] private int DamageEnemy = 0;
-    [SerializeField] private Slider HealthBarPlayer = null;
+    [SerializeField] private Slider HealthBarPlayer;
     [SerializeField] private Vector3 input;
     [SerializeField] private Transform target;
     [SerializeField] private float range = 0;
@@ -29,9 +29,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating("UpdateTargetEnemy",0f,0.5f);
+        //InvokeRepeating("UpdateTargetEnemy",0f,0.5f);
         HealthBarPlayer.maxValue = 100;
         HealthBarPlayer.value = Hp;
+        _movement = GameObject.FindGameObjectWithTag("Unicon").GetComponent<Animator>();
+        HealthBarPlayer = GameObject.FindGameObjectWithTag("HPBar").GetComponent<Slider>();
+        _Sword = GameObject.FindGameObjectWithTag("Sword");
     }
 
     void UpdateTargetEnemy()
@@ -80,7 +83,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _movement.SetBool("Run",false);
         //_Sword.SetActive(true);
-        _Archer.SetActive(false);
+        //_Archer.SetActive(false);
+        _Sword.GetComponent<BoxCollider>().enabled = true;
         if (_Sword.activeSelf == true)
         {
             _movement.SetBool("AttackSword", true);
@@ -95,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
             _movement.SetBool("AttackSwordOn", true);
             _movement.SetBool("InpactArcher", false);
             _movement.SetBool("IdleF", false);
-            _Sword.SetActive(true);
+            //_Sword.SetActive(true);
             //GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
             StartCoroutine(_time());
             swordOn = true;
@@ -188,8 +192,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerDie == false)
         {
-            //input = new Vector3(_joystick.Horizontal, _joystick.Vertical);
-            input = new Vector3(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+            input = new Vector3(_joystick.Horizontal, _joystick.Vertical);
+            //input = new Vector3(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
         }
     }
 
@@ -203,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, rotation.y,0f);
         if (swordOn == true)
         {
-            GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
+            //GameObject.Find("Sword").GetComponent<BoxCollider>().enabled = true;
         }
         //gameObject.transform.rotation = rotationToTarget;
     }
