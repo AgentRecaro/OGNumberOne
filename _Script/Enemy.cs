@@ -27,28 +27,38 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         Enemydie();
-        transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
+        if (_distancePlay <= 10)
+        {
+            enemyDie = false;
+            _animator.SetBool("Run", true);
+            _animator.SetBool("AttackOn", false);
+            _animator.SetBool("Idle",false);
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
+        }
+        else
+        {
+            enemyDie = true;
+            _animator.SetBool("AttackOn", false);
+            _animator.SetBool("Run", false);
+            _animator.SetBool("Idle",true);
+        }
+        
         _distancePlay = Vector3.Distance(_player.transform.position,transform.position);
         if (_distancePlay <= 2)
         {
             _animator.SetBool("AttackOn", true);
             _animator.SetBool("Run", false);
             _animator.SetBool("Idle",false);
-            StartCoroutine(_time());
-            _speed = 0;
         }
         else
         {
-            GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
             _animator.SetBool("AttackOn", false);
             _animator.SetBool("Run", true);
-            _animator.SetBool("Idle",false);
-            StartCoroutine(_timeAttack());
+            
         }
 
         if (_Hp <= 0)
         {
-            GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
             _animator.SetBool("Die", true);
             _animator.SetBool("AttackOn", false);
             _animator.SetBool("Run", false);
@@ -83,28 +93,36 @@ public class Enemy : MonoBehaviour
             //print("Enemydie");
             //Destroy(gameObject);
             _GUI._Score += _score;
-        }
-
-        if (EnemyAttack.gameObject.tag == "Arrow")
-        {
-            _Hp -= 1;
-            _GUI._Score += _score;
+            EventComboGame.Combo += 10;
         }
     }
 
-    IEnumerator _time()
+    public void EnableSword()
     {
-        yield return new WaitForSecondsRealtime(0.9f);
         GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSecondsRealtime(0.5f);
-        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
-        //_animator.SetBool("Idle", true);
     }
 
-    IEnumerator _timeAttack()
+    public void DisableSword()
     {
-        yield return new WaitForSecondsRealtime(1.1f);
+        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void Die()
+    {
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+        GetComponent<BoxCollider>().enabled = false;
+        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void EnemySpeedLow()
+    {
+        _animator.SetBool("Run", false);
+        _speed = 0;
+    }
+    public void Run()
+    {
         _speed = 2;
+        _animator.SetBool("AttackOn", false);
     }
 
     void Enemydie()

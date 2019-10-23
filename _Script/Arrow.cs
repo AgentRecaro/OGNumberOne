@@ -21,9 +21,9 @@ public class Arrow : MonoBehaviour
 
     private void OnTriggerEnter(Collider Enemy)
     {
-        if (Enemy.gameObject.tag == "Enemy")
+        if (Enemy.gameObject.tag == "Player")
         {
-            Destroy(gameObject);
+            PlayerMovement.Hp = PlayerMovement.Hp - 20;
         }
     }
 }

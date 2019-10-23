@@ -19,6 +19,17 @@ public class HamburgerMenuBar : MonoBehaviour
         Menubar.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (PlayerMovement.Hp <= 0)
+        {
+            FPS.GetComponent<Text>().enabled = false;
+            menuBar = true;
+            //Time.timeScale = 0f;
+            Menubar.SetActive(true);
+        }
+    }
+
     public void HamburgerMenu()
     {
         if (menuBar == true)
@@ -28,7 +39,7 @@ public class HamburgerMenuBar : MonoBehaviour
             Time.timeScale = 1f;
             Menubar.SetActive(false);
         }
-        else
+        else 
         {
             FPS.GetComponent<Text>().enabled = false;
             menuBar = true;
@@ -36,6 +47,7 @@ public class HamburgerMenuBar : MonoBehaviour
             Menubar.SetActive(true);
         }
     }
+        
     public void RestartGame()
     {
         SceneManager.LoadScene("OGTest02");

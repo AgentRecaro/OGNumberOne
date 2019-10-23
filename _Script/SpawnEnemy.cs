@@ -15,7 +15,7 @@ public class SpawnEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _spawntime = Random.Range(400,1200);
+        _spawntime = Random.Range(400,700);
         enemycount = 0;
     }
 
@@ -27,10 +27,10 @@ public class SpawnEnemy : MonoBehaviour
         //print("i" + i);
         if (i == _spawntime)
         {
-            Instantiate(Resources.Load("Skeleton"), _position.position, Quaternion.identity);
+            Instantiate(Resources.Load("Skeleton"), _position.position, Quaternion.identity,GameObject.FindGameObjectWithTag("SpawnEnemy").transform);
             print("Work");
             i = 0;
-            _spawntime = Random.Range(150, 1500);
+            _spawntime = Random.Range(150, 400);
             print("SpawnTime" + _spawntime);
             enemycount = countEnemy + enemycount;
         }

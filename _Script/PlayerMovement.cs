@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool PlayerDie = false;
     private bool movementPlayer = true;
     private bool roll = false;
+    private float defospeed = 0;
     //private bool swordOn = false;
     //private float turnSmoothTime = 0.2f;
     [SerializeField] private GameObject _Sword = null;
@@ -33,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         _movement = GameObject.FindGameObjectWithTag("Unicon").GetComponent<Animator>();
         HealthBarPlayer = GameObject.FindGameObjectWithTag("HPBar").GetComponent<Slider>();
         _Sword = GameObject.FindGameObjectWithTag("Sword");
+        defospeed = speedPlayer;
     }
     
     // Start is called before the first frame update
@@ -52,27 +54,28 @@ public class PlayerMovement : MonoBehaviour
             _movement.SetBool("Die", true);
             PlayerDie = true;
         }
-
         HealthBarPlayer.value = Hp;
     }
 
     public void _AttackSword()
     {
         _movement.SetBool("Run", false);
-        _Sword.GetComponent<BoxCollider>().enabled = true;
-        if (_Sword.activeSelf == true)
-        {
-            _movement.SetBool("AttackSword", true);
-            StartCoroutine(_time());
-        }
-        else
-        {
-            _movement.SetBool("InpactSword", true);
-            _movement.SetBool("AttackSwordOn", true);
-            _movement.SetBool("InpactArcher", false);
-            _movement.SetBool("IdleF", false);
-            StartCoroutine(_time());
-        }
+       // _movement.SetBool("AttackSword", true);
+       _movement.SetTrigger("Attack");
+       StartCoroutine(_time());
+        //_Sword.GetComponent<BoxCollider>().enabled = true;
+        //if (_Sword.activeSelf == true)
+        //{
+            
+        //}
+        //else
+        //{
+            //_movement.SetBool("InpactSword", true);
+            //_movement.SetBool("AttackSwordOn", true);
+            //_movement.SetBool("InpactArcher", false);
+            //_movement.SetBool("IdleF", false);
+           // StartCoroutine(_time());
+        //}
         movementPlayer = false;
     }
     
@@ -81,10 +84,10 @@ public class PlayerMovement : MonoBehaviour
         if (roll == true)
         {
             GameObject.Find("Roll").GetComponent<Button>().enabled = false;
+            speedPlayer += 5;
             _movement.SetBool("Roll", true);
             StartCoroutine(_timeroll());
         }
-
     }
 
     IEnumerator _timeroll()
@@ -92,17 +95,19 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         _movement.SetBool("Roll", false);
         yield return new WaitForSecondsRealtime(0.4f);
+        speedPlayer = defospeed;
+        yield return new WaitForSecondsRealtime(0.2f);
         GameObject.Find("Roll").GetComponent<Button>().enabled = true;
     }
 
     IEnumerator _time()
     {
         yield return new WaitForSecondsRealtime(0.4f);
-        _movement.SetBool("AttackSword", false);
-        _movement.SetBool("Idle", true);
-        _movement.SetBool("IdleF", true);
-        yield return new WaitForSecondsRealtime(0.3f);
-        _Sword.GetComponent<BoxCollider>().enabled = false;
+        //_movement.SetBool("AttackSword", false);
+        //_movement.SetBool("Idle", true);
+        //_movement.SetBool("IdleF", true);
+        //yield return new WaitForSecondsRealtime(0.3f);
+        //_Sword.GetComponent<BoxCollider>().enabled = false;
         movementPlayer = true;
 
     }
@@ -133,8 +138,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
                 transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation,
-                                            ref turnSmoothVelocity, speedPlayer * Time.deltaTime);
-                transform.Translate(transform.forward * speedPlayer * Time.deltaTime, Space.World);
+                                            ref turnSmoothVelocity, 0 * Time.deltaTime);
+                                            transform.Translate(transform.forward * speedPlayer * Time.deltaTime, Space.World);
                 _movement.SetBool("Run", true);
                 roll = true;
             }
