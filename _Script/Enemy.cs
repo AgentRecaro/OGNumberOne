@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
+    [SerializeField] private float range = 0;
 
     private void Start()
     {
@@ -133,5 +134,11 @@ public class Enemy : MonoBehaviour
             rotationToTarget = Quaternion.LookRotation(directionToTarget);
             transform.rotation = rotationToTarget;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }

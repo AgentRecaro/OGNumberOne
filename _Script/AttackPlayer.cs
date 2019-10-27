@@ -26,7 +26,7 @@ public class AttackPlayer : MonoBehaviour
 
     public void AtteckswordOff()
     {
-        movement.SetBool("AttackSword", false);
+       // movement.SetBool("AttackSword", false);
     }
 
     public void Quickroll()

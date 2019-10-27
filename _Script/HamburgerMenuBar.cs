@@ -50,9 +50,10 @@ public class HamburgerMenuBar : MonoBehaviour
         
     public void RestartGame()
     {
-        SceneManager.LoadScene("OGTest02");
+        SceneManager.LoadScene(0);
         Time.timeScale = 1f;
         PlayerMovement.Hp = 100;
+        EnemyCount.CountEnemydie = 0;
     }
 
     public void _Quit()

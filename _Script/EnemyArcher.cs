@@ -13,6 +13,7 @@ public class EnemyArcher : MonoBehaviour
     [SerializeField] private int _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
+    [SerializeField] private GameObject spawnArrow = null;
     //[SerializeField] private GameObject arrow = null;
 
     private void Start()
@@ -99,7 +100,7 @@ public class EnemyArcher : MonoBehaviour
 
     public void SpawnArrow()
     {
-        Instantiate(Resources.Load("Arrow"), GameObject.FindGameObjectWithTag("SpawnArrow").transform.position, GameObject.FindGameObjectWithTag("SpawnArrow").transform.rotation);
+        Instantiate(Resources.Load("Arrow"), spawnArrow.transform.position,spawnArrow.transform.rotation);
     }
     
 

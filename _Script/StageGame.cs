@@ -23,8 +23,7 @@ public class StageGame : MonoBehaviour
         if (stagegame == 2)
         {
             MaxEnemySpawn = 5;
-            MaxEnemyDie = 5;
-            GameObject.Find("SpawnEnemy").GetComponent<SpawnEnemy>().enabled = true;
+            MaxEnemyDie = 5; GameObject.Find("SpawnEnemy").GetComponent<SpawnEnemy>().enabled = true;
         }
         if (stagegame == 3)
         {

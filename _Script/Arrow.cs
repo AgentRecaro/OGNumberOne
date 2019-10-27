@@ -23,6 +23,7 @@ public class Arrow : MonoBehaviour
     {
         if (Enemy.gameObject.tag == "Player")
         {
+            Destroy(gameObject);
             PlayerMovement.Hp = PlayerMovement.Hp - 20;
         }
     }
