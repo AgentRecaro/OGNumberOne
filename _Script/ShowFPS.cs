@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,11 @@ public class ShowFPS : MonoBehaviour
 {
     private float deltaTime;
     [SerializeField] private Text FPSText = null;
+
+    private void Start()
+    {
+        FPSText = GameObject.Find("FPS").GetComponent<Text>();
+    }
 
     // Update is called once per frame
     void Update()

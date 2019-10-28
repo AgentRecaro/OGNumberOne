@@ -11,7 +11,7 @@ public class WallMove : MonoBehaviour
         posx = transform.position;
         if (transform.position.x <= 7)
         {
-            posx.x += 0.01f;
+            posx.x += 1f * Time.deltaTime;
         }
 
         transform.position = posx;

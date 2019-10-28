@@ -50,7 +50,7 @@ public class HamburgerMenuBar : MonoBehaviour
         
     public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Stage_01");
         Time.timeScale = 1f;
         PlayerMovement.Hp = 100;
         EnemyCount.CountEnemydie = 0;
@@ -60,5 +60,13 @@ public class HamburgerMenuBar : MonoBehaviour
     {
         Application.Quit();
         print("Quit");
+    }
+
+    public void Mainmenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1f;
+        EnemyCount.CountEnemydie = 0;
+        PlayerMovement.Hp = 100;
     }
 }
