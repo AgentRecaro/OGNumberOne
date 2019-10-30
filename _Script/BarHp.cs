@@ -7,6 +7,11 @@ public class BarHp : MonoBehaviour
 {
     [SerializeField] private Camera _camera = null;
 
+    private void Start()
+    {
+        _camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    }
+
     // Update is called once per frame
     void Update()
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyArcher : MonoBehaviour
 {
@@ -14,17 +15,21 @@ public class EnemyArcher : MonoBehaviour
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
     [SerializeField] private GameObject spawnArrow = null;
+    [SerializeField] private Slider HpEnemy = null;
     //[SerializeField] private GameObject arrow = null;
 
     private void Start()
     {
         _player = GameObject.Find("Player");
+        HpEnemy.maxValue = _Hp;
+        HpEnemy.direction = Slider.Direction.RightToLeft;
         //_animator = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        HpEnemy.value = _Hp;
         Enemydie();
         if (_distancePlay <= 10)
         {
@@ -70,6 +75,7 @@ public class EnemyArcher : MonoBehaviour
             Destroy(gameObject, 5);
             _speed = 0;
             EnemyCount.CountEnemydie = EnemyCount.CountEnemydie + 1;
+            EnemyCount.CountEnemydieAll = EnemyCount.CountEnemydieAll + 1;
             GetComponent<EnemyArcher>().enabled = false;
 
         }

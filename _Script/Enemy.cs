@@ -17,16 +17,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
     [SerializeField] private float range = 0;
+    [SerializeField] private Slider HpEnemy = null;
 
     private void Start()
     {
         _player = GameObject.Find("Player");
+        HpEnemy.maxValue = _Hp;
+        HpEnemy.direction = Slider.Direction.RightToLeft;
         //_animator = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        HpEnemy.value = _Hp;
         Enemydie();
         if (_distancePlay <= 10)
         {
@@ -70,6 +74,7 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject, 5);
             _speed = 0;
             EnemyCount.CountEnemydie = EnemyCount.CountEnemydie + 1;
+            EnemyCount.CountEnemydieAll = EnemyCount.CountEnemydieAll + 1;
             GetComponent<Enemy>().enabled = false;
 
         }

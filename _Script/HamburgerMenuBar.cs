@@ -7,7 +7,13 @@ using UnityEngine.UI;
 
 public class HamburgerMenuBar : MonoBehaviour
 {
+    public static int MoneyBear;
+    public static int EXPValue;
+    public MainMenu Addmoney;
+    public LevelSystem AddEXP;
     private bool menuBar = false;
+    [SerializeField] private Text Money = null;
+    [SerializeField] private Text EXP = null;
     [SerializeField] private GameObject Menubar = null;
     [SerializeField] private GameObject FPS = null;
     
@@ -21,9 +27,16 @@ public class HamburgerMenuBar : MonoBehaviour
 
     private void Update()
     {
+        
         if (PlayerMovement.Hp <= 0)
         {
+            EXPValue = EnemyCount.CountEnemydieAll * 2;
+            MoneyBear = EnemyCount.CountEnemydieAll * 10;
             FPS.GetComponent<Text>().enabled = false;
+            Money.GetComponent<Text>().enabled = true;
+            EXP.GetComponent<Text>().enabled = true;
+            EXP.text = "EXP: " + EXPValue;
+            Money.text = "" + MoneyBear;
             menuBar = true;
             //Time.timeScale = 0f;
             Menubar.SetActive(true);
@@ -64,6 +77,8 @@ public class HamburgerMenuBar : MonoBehaviour
 
     public void Mainmenu()
     {
+        Addmoney.AddMoney(MoneyBear);
+        AddEXP.AddEXP(EXPValue);
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
         EnemyCount.CountEnemydie = 0;

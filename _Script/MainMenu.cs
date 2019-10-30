@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    static int moneyBear = 0;
+    static float StaminaValue = 30;
     public bool Map = false;
     public bool Status = false;
     public bool Inventory = false;
@@ -15,17 +17,24 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject UIInventory = null;
     [SerializeField] private GameObject UIShop = null;
     [SerializeField] private GameObject UISetting = null;
-    
+    [SerializeField] private GameObject ButtonGamePlay = null;
+    [SerializeField] private Text MoneyBearText = null;
+    [SerializeField] private Text GemText = null;
+    [SerializeField] private Text StaminaText = null;
+    [SerializeField] private Slider StaminaSlider = null;
+
     // Start is called before the first frame update
     void Start()
     {
         Map = true;
-
     }
 
     // Update is called once per frame
     void Update()
     {
+        StaminaSlider.value = StaminaValue;
+        MoneyBearText.text = moneyBear.ToString();
+        StaminaText.text = StaminaValue + " /30";
         if (Map == true)
         {
             UIMap.SetActive(true);
@@ -36,6 +45,7 @@ public class MainMenu : MonoBehaviour
             UIMap.SetActive(false);
             GameObject.Find("Button Map").GetComponent<Button>().interactable = true;
         }
+
         if (Status == true)
         {
             UIStatus.SetActive(true);
@@ -46,6 +56,7 @@ public class MainMenu : MonoBehaviour
             UIStatus.SetActive(false);
             GameObject.Find("Button Status").GetComponent<Button>().interactable = true;
         }
+
         if (Inventory == true)
         {
             UIInventory.SetActive(true);
@@ -56,6 +67,7 @@ public class MainMenu : MonoBehaviour
             UIInventory.SetActive(false);
             GameObject.Find("Button Inventory").GetComponent<Button>().interactable = true;
         }
+
         if (Shop == true)
         {
             UIShop.SetActive(true);
@@ -66,7 +78,22 @@ public class MainMenu : MonoBehaviour
             UIShop.SetActive(false);
             GameObject.Find("Button Shop").GetComponent<Button>().interactable = true;
         }
-        
+
+        if (StaminaValue <= 0)
+        {
+            ButtonGamePlay.GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            ButtonGamePlay.GetComponent<Button>().enabled = true;
+        }
+    }
+
+    public void AddMoney(int AddMoneyBear)
+    {
+        moneyBear += AddMoneyBear;
+        PlayerPrefs.SetInt("CurrentMoney", moneyBear);
+        MoneyBearText.text = "" + moneyBear;
     }
 
     public void UIMapOn()
@@ -113,7 +140,10 @@ public class MainMenu : MonoBehaviour
 
     public void GameStart()
     {
+        EnemyCount.CountEnemydieAll = 0;
+        HamburgerMenuBar.MoneyBear = 0;
         SceneManager.LoadScene("Stage_01");
-        GameObject.Find("stamina").GetComponent<Slider>().value -= 5;
+        StaminaValue -= 5;
     }
+    
 }

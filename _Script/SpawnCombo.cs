@@ -13,7 +13,7 @@ public class SpawnCombo : MonoBehaviour
         // Start is called before the first frame update
     void Start()
     {
-
+        position = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Transform>();
         spawn = false;
     }
 

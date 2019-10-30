@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class EnemyCount : MonoBehaviour
 {
     public static int CountEnemydie;
+    public static int CountEnemydieAll;
+    [SerializeField] private int EnemyDieAll = 0;
     [SerializeField] private int EnemyDie = 0;
     //[SerializeField] private Text _stageGame = null;
 
@@ -21,6 +23,7 @@ public class EnemyCount : MonoBehaviour
     void Update()
     {
         EnemyDie = CountEnemydie;
+        EnemyDieAll += CountEnemydieAll;
         //if (EnemyDie == StageGame.MaxEnemyDie)
         //{
             //CountEnemydie = 0;
