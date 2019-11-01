@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class LevelSystem : MonoBehaviour
 {
-    static int Level = 1;
-    static int EXP;
+    public static int Level = 1;
+    public static int EXP;
     static int MaxEXP = 50;
     [SerializeField] private Text LevelText = null;
     [SerializeField] private Slider EXPSlider = null;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

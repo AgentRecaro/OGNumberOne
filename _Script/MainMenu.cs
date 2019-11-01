@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     static int moneyBear = 0;
-    static float StaminaValue = 30;
+    public static float StaminaValue = 30;
     public bool Map = false;
     public bool Status = false;
     public bool Inventory = false;
@@ -26,12 +27,20 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        OnApplicationQuit();
+        OnApplicationFocus();
         Map = true;
+        LevelSystem.EXP = PlayerPrefs.GetInt("EXPPlayer",0);
+        LevelSystem.Level = PlayerPrefs.GetInt("LevelPlayer", 0);
+        moneyBear = PlayerPrefs.GetInt("MoneyBear", moneyBear);
+        StaminaValue = PlayerPrefs.GetFloat("Stamina", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
+        OnApplicationQuit();
+        OnApplicationFocus();
         StaminaSlider.value = StaminaValue;
         MoneyBearText.text = moneyBear.ToString();
         StaminaText.text = StaminaValue + " /30";
@@ -145,5 +154,27 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Stage_01");
         StaminaValue -= 5;
     }
-    
+
+    private void OnApplicationFocus()
+    {
+        PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
+        PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
+        PlayerPrefs.SetInt("MoneyBear",moneyBear);
+        PlayerPrefs.SetFloat("Stamina",StaminaValue);
+        PlayerPrefs.Save();
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
+        PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
+        PlayerPrefs.SetInt("MoneyBear",moneyBear);
+        PlayerPrefs.SetFloat("Stamina",StaminaValue);
+        PlayerPrefs.Save();
+    }
+
+    void Load()
+    {
+        
+    }
 }
