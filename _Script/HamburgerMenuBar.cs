@@ -83,5 +83,9 @@ public class HamburgerMenuBar : MonoBehaviour
         Time.timeScale = 1f;
         EnemyCount.CountEnemydie = 0;
         PlayerMovement.Hp = 100;
+        PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
+        EventComboGame.SaveNameCombo = 0;
+        EventComboGame.Combo = 0;
+        Destroy(GameObject.FindGameObjectWithTag("Combo"));
     }
 }

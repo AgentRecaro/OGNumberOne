@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawnCombo : MonoBehaviour
 {
-    private bool spawn;
+    public static bool spawn;
     [SerializeField] private float destroycobo = 0.3f;
     [SerializeField] private float timedestroy;
     [SerializeField] private Transform position = null;
@@ -14,7 +14,12 @@ public class SpawnCombo : MonoBehaviour
     void Start()
     {
         position = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Transform>();
-        spawn = false;
+        //spawn = false;
+        if (spawn == true)
+        {
+            Instantiate(Resources.Load("ComBoCanvas"),position.position, Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
+            timedestroy = 3;
+        }
     }
 
     // Update is called once per frame
@@ -28,7 +33,9 @@ public class SpawnCombo : MonoBehaviour
         {
             spawn = false;
             Destroy(GameObject.FindGameObjectWithTag("Combo"));
+            EventComboGame.SaveNameCombo = 0;
             EventComboGame.Combo = 0;
+            
         }
     }
 

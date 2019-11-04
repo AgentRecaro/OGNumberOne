@@ -2262,6 +2262,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4344074115902001670, guid: 73cedbc330046de41b26c5b048cb544b,
+        type: 3}
+      propertyPath: TimeReStamina
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73cedbc330046de41b26c5b048cb544b, type: 3}
 --- !u!224 &6987970075391641003 stripped
@@ -2494,6 +2499,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: pivotSpawnCombo
       objectReference: {fileID: 0}
+    - target: {fileID: 1704340523555009697, guid: 56bb2fabbd131d04b9ac112768f140e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704340524054817476, guid: 56bb2fabbd131d04b9ac112768f140e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1704340523555009696, guid: 56bb2fabbd131d04b9ac112768f140e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2597,6 +2612,16 @@ PrefabInstance:
     - target: {fileID: 1704340523555009696, guid: 56bb2fabbd131d04b9ac112768f140e3,
         type: 3}
       propertyPath: m_Pivot.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704340525168984790, guid: 56bb2fabbd131d04b9ac112768f140e3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704340524323615788, guid: 56bb2fabbd131d04b9ac112768f140e3,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

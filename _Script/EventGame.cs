@@ -14,6 +14,7 @@ public class EventGame : MonoBehaviour
             DontDestroyOnLoad(player.gameObject);
             SceneManager.LoadScene(snecename);
             EnemyCount.CountEnemydie = 0;
+            PlayerPrefs.SetString("NameCombo", EventComboGame.NameComBo[EventComboGame.SaveNameCombo]);
         }
     }
 }

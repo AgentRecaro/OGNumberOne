@@ -11,7 +11,7 @@ public class EnemyArcher : MonoBehaviour
     [SerializeField] private float _distancePlay;
     [SerializeField] private Animator _animator = null;
     [SerializeField] private float _speed = 2;
-    [SerializeField] private int _Hp;
+    [SerializeField] private float _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
     [SerializeField] private GameObject spawnArrow = null;
@@ -96,7 +96,7 @@ public class EnemyArcher : MonoBehaviour
             //GameObject.Find("Player1").GetComponent<Animator>().SetBool("AttackOff", true);
             //GameObject.Find("Player1").GetComponent<Animator>().SetBool("AttackOn", false);
             //GameObject.Find("Player1").GetComponent<Transform>().rotation = Quaternion.Euler(0,180,0);
-            _Hp -= 1;
+            _Hp -= PlayerMovement.Damage;
             //print("Enemydie");
             //Destroy(gameObject);
             _GUI._Score += _score;

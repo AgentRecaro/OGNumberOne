@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    static int moneyBear = 0;
-    public static float StaminaValue = 30;
+    public static int moneyBear;
+    public static float StaminaValue;
     public bool Map = false;
     public bool Status = false;
     public bool Inventory = false;
@@ -27,23 +27,28 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OnApplicationQuit();
-        OnApplicationFocus();
+        //OnApplicationFocus();
         Map = true;
-        LevelSystem.EXP = PlayerPrefs.GetInt("EXPPlayer",0);
-        LevelSystem.Level = PlayerPrefs.GetInt("LevelPlayer", 0);
+        //PlayerPrefs.SetInt("MoneyBear",moneyBear);
+        LevelSystem.EXP = PlayerPrefs.GetInt("EXPPlayer",LevelSystem.EXP);
+        LevelSystem.Level = PlayerPrefs.GetInt("LevelPlayer", LevelSystem.Level);
         moneyBear = PlayerPrefs.GetInt("MoneyBear", moneyBear);
-        StaminaValue = PlayerPrefs.GetFloat("Stamina", 0);
+        StaminaValue = PlayerPrefs.GetFloat("Stamina", StaminaValue);
+
+    }
+
+    private void Awake()
+    {
+        StaminaValue = 30;
     }
 
     // Update is called once per frame
     void Update()
     {
-        OnApplicationQuit();
         OnApplicationFocus();
         StaminaSlider.value = StaminaValue;
         MoneyBearText.text = moneyBear.ToString();
-        StaminaText.text = StaminaValue + " /30";
+        StaminaText.text = StaminaValue + "/30";
         if (Map == true)
         {
             UIMap.SetActive(true);
@@ -152,29 +157,33 @@ public class MainMenu : MonoBehaviour
         EnemyCount.CountEnemydieAll = 0;
         HamburgerMenuBar.MoneyBear = 0;
         SceneManager.LoadScene("Stage_01");
+        HamburgerMenuBar.EXPValue = 0;
         StaminaValue -= 5;
+        PlayerPrefs.SetFloat("Stamina",StaminaValue);
     }
 
     private void OnApplicationFocus()
     {
-        PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
-        PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
-        PlayerPrefs.SetInt("MoneyBear",moneyBear);
-        PlayerPrefs.SetFloat("Stamina",StaminaValue);
-        PlayerPrefs.Save();
+        
+            PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
+            PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
+            //PlayerPrefs.SetInt("MoneyBear",moneyBear);
+            //PlayerPrefs.SetFloat("Stamina",StaminaValue);
+            PlayerPrefs.Save();
+    
     }
 
-    private void OnApplicationQuit()
+    private void OnApplicationPause(bool pause)
     {
-        PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
-        PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
-        PlayerPrefs.SetInt("MoneyBear",moneyBear);
-        PlayerPrefs.SetFloat("Stamina",StaminaValue);
-        PlayerPrefs.Save();
-    }
-
-    void Load()
-    {
+        if (pause != false)
+        {
+            PlayerPrefs.SetInt("EXPPlayer",LevelSystem.EXP);
+            PlayerPrefs.SetInt("LevelPlayer", LevelSystem.Level);
+            //PlayerPrefs.SetInt("MoneyBear",moneyBear);
+            //PlayerPrefs.SetFloat("Stamina",StaminaValue);
+            PlayerPrefs.Save();
+        }
+        print("Pause" + pause);
         
     }
 }

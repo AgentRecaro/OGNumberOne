@@ -6,22 +6,28 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Text TextTest;
     public GameObject _Player;
     public Animator _movement;
-    public static int Hp = 100;
+    public static float Hp = 100;
+    public static float Damage = 1;
+    public static float RegenHp;
+    //public static float speedPlayer = 5;
+    public static float AttackSpeed;
+    public static float Armor;
     private FixedJoystick _joystick;
     private float turnSmoothVelocity = 0.2f;
     private bool PlayerDie = false;
     private bool movementPlayer = true;
     private bool roll = false;
-    private float defospeed = 0;
+    [SerializeField] private float defospeed = 0;
     //private bool swordOn = false;
     //private float turnSmoothTime = 0.2f;
     [SerializeField] private GameObject _Sword = null;
     //[SerializeField] private GameObject _Archer = null;
     //[SerializeField] private GameObject _Arrow = null;
-    [SerializeField] private float speedPlayer = 0;
-    [SerializeField] private int DamageEnemy = 0;
+    [SerializeField] private float speedPlayer = 5;
+    [SerializeField] private float DamageEnemy = 0;
     [SerializeField] private Slider HealthBarPlayer;
     [SerializeField] private Vector3 input;
     //[SerializeField] private float range = 0;
@@ -53,6 +59,9 @@ public class PlayerMovement : MonoBehaviour
             speedPlayer = 0;
             _movement.SetBool("Die", true);
             PlayerDie = true;
+        }
+        else
+        { 
         }
         HealthBarPlayer.value = Hp;
     }

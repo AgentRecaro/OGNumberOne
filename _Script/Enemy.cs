@@ -13,11 +13,12 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _distancePlay;
     [SerializeField] private Animator _animator = null;
     [SerializeField] private float _speed = 2;
-    [SerializeField] private int _Hp;
+    [SerializeField] private float _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
     [SerializeField] private float range = 0;
     [SerializeField] private Slider HpEnemy = null;
+    [SerializeField] private GameObject SwordEnemy = null;
 
     private void Start()
     {
@@ -95,7 +96,7 @@ public class Enemy : MonoBehaviour
             //GameObject.Find("Player1").GetComponent<Animator>().SetBool("AttackOff", true);
             //GameObject.Find("Player1").GetComponent<Animator>().SetBool("AttackOn", false);
             //GameObject.Find("Player1").GetComponent<Transform>().rotation = Quaternion.Euler(0,180,0);
-            _Hp -= 1;
+            _Hp -= PlayerMovement.Damage;
             //print("Enemydie");
             //Destroy(gameObject);
             _GUI._Score += _score;
@@ -105,19 +106,19 @@ public class Enemy : MonoBehaviour
 
     public void EnableSword()
     {
-        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = true;
+        SwordEnemy.GetComponent<BoxCollider>().enabled = true;
     }
 
     public void DisableSword()
     {
-        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
+        SwordEnemy.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void Die()
     {
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         GetComponent<BoxCollider>().enabled = false;
-        GameObject.FindGameObjectWithTag("SwordEnemy").GetComponent<BoxCollider>().enabled = false;
+        SwordEnemy.GetComponent<BoxCollider>().enabled = false;
     }
 
     public void EnemySpeedLow()

@@ -7,27 +7,36 @@ using UnityEngine.UI;
 public class EventComboGame : MonoBehaviour
 {
     public static float Combo;
+    public static Text combotext;
+    public static string[] NameComBo;
+    public static int SaveNameCombo;
     private bool C;
     private bool B;
     private bool A;
     private bool S;
-    [SerializeField] private Text combotext = null;
+    //[SerializeField] private string[] NameComBo = null;
+    //[SerializeField] private int SaveNameCombo;
+    //[SerializeField] private Text combotext = null;
     [SerializeField] private Slider comboSlider = null;
 
     // Start is called before the first frame update
     void Start()
     {
+        NameComBo = new String[] {"D", "C", "B", "A", "S"};
+        SaveNameCombo = PlayerPrefs.GetInt("NameCombo", SaveNameCombo);
+        combotext = GameObject.FindGameObjectWithTag("ComBoText").GetComponent<Text>();
         comboSlider.value = Combo;
-        combotext.text = "D";
+        combotext.text = NameComBo[SaveNameCombo];
         C = true;
         B = false;
         A = false;
         S = false;
     }
 
-
     void Update()
     {
+        PlayerPrefs.SetString("NameCombo", NameComBo[SaveNameCombo]);
+        PlayerPrefs.SetInt("SaveNamecaombo", SaveNameCombo);
         comboSlider.value = Combo;
         if (Combo >= 1 && comboSlider.value <= 100)
         {
@@ -36,7 +45,9 @@ public class EventComboGame : MonoBehaviour
         
         if (comboSlider.value == 100 && C == true)
         {
-            combotext.text = "C";
+            SaveNameCombo++;
+            combotext.text = NameComBo[SaveNameCombo];
+            //combotext.text = "C";
             comboSlider.maxValue = 150;
             Combo = 0;
             C = false;
@@ -45,7 +56,9 @@ public class EventComboGame : MonoBehaviour
 
         if (comboSlider.value == 150 && B == true)
         {
-            combotext.text = "B";
+            SaveNameCombo++;
+            combotext.text = NameComBo[SaveNameCombo];
+            //combotext.text = "B";
             comboSlider.maxValue = 180;
             Combo = 0;
             B = false;
@@ -54,7 +67,9 @@ public class EventComboGame : MonoBehaviour
 
         if (comboSlider.value == 180 && A == true)
         {
-            combotext.text = "A";
+            SaveNameCombo++;
+            combotext.text = NameComBo[SaveNameCombo];
+            //combotext.text = "A";
             comboSlider.maxValue = 200;
             Combo = 0;
             A = false;
@@ -63,12 +78,14 @@ public class EventComboGame : MonoBehaviour
 
         if (comboSlider.value == 200 && S == true)
         {
-            combotext.text = "S";
+            SaveNameCombo++;
+            combotext.text = NameComBo[SaveNameCombo];
+            //combotext.text = "S";
             comboSlider.maxValue = 250;
             Combo = 0;
         }
 
-        
+        PlayerPrefs.Save();
 
     }
 }
