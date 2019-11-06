@@ -74,6 +74,7 @@ public class Enemy : MonoBehaviour
             gameObject.tag = "Untagged";
             Destroy(gameObject, 5);
             _speed = 0;
+            SwordEnemy.GetComponent<BoxCollider>().enabled = false;
             EnemyCount.CountEnemydie = EnemyCount.CountEnemydie + 1;
             EnemyCount.CountEnemydieAll = EnemyCount.CountEnemydieAll + 1;
             GetComponent<Enemy>().enabled = false;

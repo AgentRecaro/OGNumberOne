@@ -54,8 +54,8 @@ public class OverAll : MonoBehaviour
             }
         }
         PlayerPrefs.SetFloat("Stamina", MainMenu.StaminaValue);
-        //PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
-        PlayerPrefs.SetInt("MoneyBear",18400);
+        PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
+        //PlayerPrefs.SetInt("MoneyBear",18400);
         PlayerPrefs.Save();
         print("Quit");
     }

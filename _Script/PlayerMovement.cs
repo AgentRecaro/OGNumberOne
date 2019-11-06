@@ -9,24 +9,26 @@ public class PlayerMovement : MonoBehaviour
     public Text TextTest;
     public GameObject _Player;
     public Animator _movement;
-    public static float Hp = 100;
-    public static float Damage = 1;
+    public static float Hp;
+    public static float Damage;
     public static float RegenHp;
-    //public static float speedPlayer = 5;
+    public static float speedPlayer;
     public static float AttackSpeed;
     public static float Armor;
+    public static float MaxHp;
+    public static float defospeed;
     private FixedJoystick _joystick;
     private float turnSmoothVelocity = 0.2f;
     private bool PlayerDie = false;
     private bool movementPlayer = true;
     private bool roll = false;
-    [SerializeField] private float defospeed = 0;
+    //[SerializeField] private float defospeed = 0;
     //private bool swordOn = false;
     //private float turnSmoothTime = 0.2f;
     [SerializeField] private GameObject _Sword = null;
     //[SerializeField] private GameObject _Archer = null;
     //[SerializeField] private GameObject _Arrow = null;
-    [SerializeField] private float speedPlayer = 5;
+    //[SerializeField] private float speedPlayer = 5;
     [SerializeField] private float DamageEnemy = 0;
     [SerializeField] private Slider HealthBarPlayer;
     [SerializeField] private Vector3 input;
@@ -34,13 +36,20 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] private float distanceEnemy = 0;
 
     private void Start()
-    {
-        HealthBarPlayer.maxValue = 100;
-        HealthBarPlayer.value = Hp;
+    { 
+        
         _movement = GameObject.FindGameObjectWithTag("Unicon").GetComponent<Animator>();
         HealthBarPlayer = GameObject.FindGameObjectWithTag("HPBar").GetComponent<Slider>();
         _Sword = GameObject.FindGameObjectWithTag("Sword");
-        defospeed = speedPlayer;
+        //defospeed = speedPlayer;
+        HealthBarPlayer.maxValue = MaxHp;
+        HealthBarPlayer.value = Hp;
+        print(Hp);
+        print(Damage);
+        print(RegenHp);
+        print(speedPlayer);
+        print(AttackSpeed);
+        print(Armor);
     }
     
     // Start is called before the first frame update
@@ -52,11 +61,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(speedPlayer);
+        print(defospeed);
         _PlayerDie();
         MovementPlayer();
         if (Hp <= 0)
         {
-            speedPlayer = 0;
+            //speedPlayer = 0;
+            Time.timeScale = 0f;
             _movement.SetBool("Die", true);
             PlayerDie = true;
         }
@@ -160,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    
 }
 
 

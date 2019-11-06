@@ -1,10 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatusSystem : MonoBehaviour
 {
+    public bool StrenghMax = false;
+    public bool DamageMax = false;
+    public bool RegenerationMax = false;
+    public bool SpeedMax = false;
+    public bool AttackSpeedMax = false;
+    public bool ArmorMax = false;
+    public bool GloryMax = false;
+    public bool GoldMax = false;
+    public bool EXPMax = false;
     private int[] priceStrength;
     private int[] priceDamage;
     private int[] priceRegeneration;
@@ -77,11 +87,13 @@ public class StatusSystem : MonoBehaviour
     [SerializeField] private Text GloryTextPrice = null;
     [SerializeField] private Text GoldTextPrice = null;
     [SerializeField] private Text EXPTextPrice = null;
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+        //Price
         priceStrength = new int[]{ 200, 250, 350, 500, 750};
         priceDamage = new int[]{ 200, 250, 350, 500, 750};
         priceRegeneration = new int[]{ 200, 250, 350, 500, 750};
@@ -91,6 +103,8 @@ public class StatusSystem : MonoBehaviour
         priceGlory = new int[]{ 2000};
         priceGold = new int[]{ 200, 250, 350, 500, 750};
         priceEXP = new int[]{ 200, 250, 350, 500, 750};
+
+        //MainStatus
         Strength = new float[]{ 100, 110, 130, 160, 210, 280};//Value= 6
         Damage = new float[]{ 100, 110, 130, 160, 200, 250};//Value= 6
         Regeneration = new float[]{ 0, 0.25f, 0.3f, 0.5f, 0.75f, 1f};//Value= 6
@@ -98,18 +112,54 @@ public class StatusSystem : MonoBehaviour
         AttackSpeed = new float[]{ 3, 3.25f, 3.55f, 4.05f, 4.8f, 5.8f};//Value= 6
         Armor = new float[]{ 100, 120, 150, 200, 270, 370};//Value= 6
         Glory = new float[]{ 0, 1};//Value= 2
-        Gold = new float[]{ 10, 10.5f, 11.25f, 12.25f, 13.75f, 15.75f};//Value= 6
-        EXP = new float[]{ 2, 2.25f, 2.55f, 3.05f, 3.8f, 4.8f};//Value= 6 
-        //priceValue = PlayerPrefs.GetInt("PriceValue", priceValue);
+        Gold = new float[]{ 10f, 10.5f, 11.25f, 12.25f, 13.75f, 15.75f};//Value= 6
+        EXP = new float[]{ 2f, 2.25f, 2.55f, 3.05f, 3.8f, 4.8f};//Value= 6
+        
+        //Price
+        PlayerPrefs.GetInt("priceStrength", priceStrength[priceStrengthValue]); 
+        PlayerPrefs.GetInt("priceDamage", priceDamage[priceDamageValue]);
+        PlayerPrefs.GetInt("priceRegeneration ", priceRegeneration[priceRegenerationValue] );
+        PlayerPrefs.GetInt("priceSpeed", priceSpeed[priceSpeedValue]);
+        PlayerPrefs.GetInt("priceAttackSpeed", priceAttackSpeed[priceAttackSpeedValue]);
+        PlayerPrefs.GetInt("priceArmor", priceArmor[priceArmorValue]);
+        PlayerPrefs.GetInt("priceGlory", priceGlory[priceGloryValue]);
+        PlayerPrefs.GetInt("priceGold", priceGold[priceGoldValue]);
+        PlayerPrefs.GetInt("priceEXP", priceEXP[priceEXPValue]);
+        
+//        //Status
+        PlayerPrefs.GetFloat("Strength",Strength[StrengthValue]);
+        PlayerPrefs.GetFloat("Damage",Damage[DamageValue]);
+        PlayerPrefs.GetFloat("Regeneration",Regeneration[RegenerationValue]);
+        PlayerPrefs.GetFloat("Speed",Speed[SpeedValue]);
+        PlayerPrefs.GetFloat("AttackSpeed",AttackSpeed[AttackSpeedValue]);
+        PlayerPrefs.GetFloat("Armor",Armor[ArmorValue]);
+        PlayerPrefs.GetFloat("Glory",Glory[GloryValue]);
+        PlayerPrefs.GetFloat("Gold",Gold[GoldValue]);
+        PlayerPrefs.GetFloat("EXP",EXP[EXPValue]);
+//        
+//        //PriceValue
+        priceStrengthValue = PlayerPrefs.GetInt("priceStrengthValue", priceStrengthValue); 
+        priceDamageValue = PlayerPrefs.GetInt("priceDamageValue", priceDamageValue);
+        priceRegenerationValue = PlayerPrefs.GetInt("priceRegenerationValue ", priceRegenerationValue );
+        priceSpeedValue = PlayerPrefs.GetInt("priceSpeedValue", priceSpeedValue);
+        priceAttackSpeedValue = PlayerPrefs.GetInt("priceAttackSpeedValue", priceAttackSpeedValue);
+        priceArmorValue = PlayerPrefs.GetInt("priceArmorValue", priceArmorValue);
+        priceGloryValue = PlayerPrefs.GetInt("priceGloryValue", priceGloryValue);
+        priceGoldValue = PlayerPrefs.GetInt("priceGoldValue", priceGoldValue);
+        priceEXPValue = PlayerPrefs.GetInt("priceEXPValue", priceEXPValue);
+        
+//        //StatusValue
         StrengthValue = PlayerPrefs.GetInt("StengthValue", StrengthValue);
         DamageValue = PlayerPrefs.GetInt("DamageValue", DamageValue);
         RegenerationValue = PlayerPrefs.GetInt("RegenerationValue", RegenerationValue);
-        //SpeedValue = PlayerPrefs.GetInt("SpeedValue", SpeedValue);
+        SpeedValue = PlayerPrefs.GetInt("SpeedValue", SpeedValue);
         AttackSpeedValue = PlayerPrefs.GetInt("AttackSpeedValue", AttackSpeedValue);
         ArmorValue = PlayerPrefs.GetInt("ArmorValue", ArmorValue);
-        //Glory
+        GloryValue = PlayerPrefs.GetInt("GloryValue", GloryValue);
         GoldValue = PlayerPrefs.GetInt("GoldValue", GoldValue);
         EXPValue = PlayerPrefs.GetInt("EXPValue", EXPValue);
+        
+        //MaxValueSlider
         StrengthSlider.maxValue = 5;
         DamageSlider.maxValue = 5;
         RegenerationSlider.maxValue = 5;
@@ -119,6 +169,8 @@ public class StatusSystem : MonoBehaviour
         GlorySlider.maxValue = 1;
         GoldSlider.maxValue = 5;
         EXPSlider.maxValue = 5;
+        
+        //TextValue
         StrengthText.text = "Strength  " + Strength[StrengthValue];
         DamageText.text = "Damage  " + Damage[DamageValue];
         RegenerationText.text = "Regeneration  " + Regeneration[RegenerationValue] + "%";
@@ -128,21 +180,27 @@ public class StatusSystem : MonoBehaviour
         GloryText.text = "Glory  " + Glory[GloryValue];
         GoldText.text = "Gold  " + Gold[GoldValue] + "%";
         EXPText.text = "EXP.  " + EXP[EXPValue] + "%";
-        StrengthTextPrice.text = "" + priceStrength[priceStrengthValue];
-        DamageTextPrice.text = "" + priceDamage[priceDamageValue];
-        RegenerationTextPrice.text = "" + priceRegeneration[priceRegenerationValue];
-        SpeedTextPrice.text = "" + priceSpeed[priceSpeedValue];
-        AttackSpeedTextPrice.text = "" + priceAttackSpeed[priceAttackSpeedValue];
-        ArmorTextPrice.text = "" + priceArmor[priceArmorValue];
-        GloryTextPrice.text = "" + priceGlory[priceGloryValue];
-        GoldTextPrice.text = "" + priceGold[priceGoldValue];
-        EXPTextPrice.text = "" + priceEXP[priceEXPValue];
+        
+        //TextPrice
+//        GoldTextPrice.text = "" + priceGold[priceGoldValue];
+//        EXPTextPrice.text = "" + priceEXP[priceEXPValue];
+//        StrengthTextPrice.text = "" + priceStrength[priceStrengthValue];
+//        DamageTextPrice.text = "" + priceDamage[priceDamageValue];
+//        RegenerationTextPrice.text = "" + priceRegeneration[priceRegenerationValue];
+//        SpeedTextPrice.text = "" + priceSpeed[priceSpeedValue];
+//        AttackSpeedTextPrice.text = "" + priceAttackSpeed[priceAttackSpeedValue];
+//        ArmorTextPrice.text = "" + priceArmor[priceArmorValue];
+//        GloryTextPrice.text = "" + priceGlory[priceGloryValue];
     }
 
     // Update is called once per frame
     void Update()
     {
         //SpeedText.text = "Speed  " + Speed[SpeedValue];
+        dataUpdate();
+        OnSaveUpStatus();
+        ValueSliderUpdate();
+        PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
     }
 
     public void StrengthButton()
@@ -156,6 +214,7 @@ public class StatusSystem : MonoBehaviour
                 StrengthValue++;
                 StrengthSlider.value = StrengthValue;
                 StrengthText.text = "Strength  " + Strength[StrengthValue];
+                //OnSaveUpStatus();
             }
 
             if (StrengthValue == Strength.Length -1)
@@ -167,7 +226,6 @@ public class StatusSystem : MonoBehaviour
             }
             StrengthTextPrice.text = "" + priceStrength[priceStrengthValue];
         }
-        
     }
 
     public void DamageButton()
@@ -181,6 +239,7 @@ public class StatusSystem : MonoBehaviour
                 DamageValue++;
                 DamageSlider.value = DamageValue;
                 DamageText.text = "Damage  " + Damage[DamageValue];
+                //OnSaveUpStatus();
             }
 
             if (DamageValue == Damage.Length -1)
@@ -192,7 +251,6 @@ public class StatusSystem : MonoBehaviour
             }
             DamageTextPrice.text = "" + priceDamage[priceDamageValue];
         }
-        
     }
 
     public void RegenerationButton()
@@ -206,6 +264,7 @@ public class StatusSystem : MonoBehaviour
                 RegenerationValue++;
                 RegenerationSlider.value = RegenerationValue;
                 RegenerationText.text = "Regeneration  " + Regeneration[RegenerationValue] + "%";
+                //OnSaveUpStatus();
             }
 
             if (RegenerationValue == Regeneration.Length -1)
@@ -230,6 +289,7 @@ public class StatusSystem : MonoBehaviour
                SpeedValue++;
                SpeedSlider.value = SpeedValue;
                SpeedText.text = "Speed  " + Speed[SpeedValue] + "%";
+               //OnSaveUpStatus();
            }
 
            if (SpeedValue == Speed.Length -1)
@@ -241,7 +301,6 @@ public class StatusSystem : MonoBehaviour
            }
            SpeedTextPrice.text = "" + priceSpeed[priceSpeedValue];
        }
-       //PlayerPrefs.SetInt("SpeedValue", SpeedValue);
    }
 
    public void AttackSpeedButton()
@@ -255,6 +314,7 @@ public class StatusSystem : MonoBehaviour
                AttackSpeedValue++;
                AttackSpeedSlider.value = AttackSpeedValue;
                AttackSpeedText.text = "AttackSpeed  " + AttackSpeed[AttackSpeedValue] + "%";
+               //OnSaveUpStatus();
            }
 
            if (AttackSpeedValue == AttackSpeed.Length -1)
@@ -279,6 +339,7 @@ public class StatusSystem : MonoBehaviour
                ArmorValue++;
                ArmorSlider.value = ArmorValue;
                ArmorText.text = "Armor  " + Armor[ArmorValue];
+               //OnSaveUpStatus();
            }
 
            if (ArmorValue == Armor.Length -1)
@@ -303,6 +364,7 @@ public class StatusSystem : MonoBehaviour
                GloryValue++;
                GlorySlider.value = GloryValue;
                GloryText.text = "Glory  " + Glory[GloryValue];
+               //OnSaveUpStatus();
            }
 
            if (GloryValue == Glory.Length -1)
@@ -327,6 +389,7 @@ public class StatusSystem : MonoBehaviour
                GoldValue++;
                GoldSlider.value = GoldValue;
                GoldText.text = "Gold  " + Gold[GoldValue] + "%";
+               //OnSaveUpStatus();
            }
 
            if (GoldValue == Gold.Length -1)
@@ -351,6 +414,7 @@ public class StatusSystem : MonoBehaviour
                EXPValue++;
                EXPSlider.value = EXPValue;
                EXPText.text = "EXP.  " + EXP[EXPValue] + "%";
+               //OnSaveUpStatus();
            }
 
            if (EXPValue == EXP.Length -1)
@@ -362,5 +426,194 @@ public class StatusSystem : MonoBehaviour
            }
            EXPTextPrice.text = "" + priceEXP[priceEXPValue];
        }
+   }
+
+   private void dataUpdate()
+   {
+       if (StrengthValue == Strength.Length - 1)
+       {
+           StrengthText.text = "Strength  " + Strength[StrengthValue];
+           StrengthTextPrice.text = "Max.";
+           StrengthButtonUI.enabled = false;
+           StrenghMax = true;
+       }
+       
+       if (DamageValue == Damage.Length -1)
+       {
+           DamageText.text = "Damage  " + Damage[DamageValue];
+           DamageTextPrice.text = "Max.";
+           DamageButtonUI.enabled = false;
+           DamageMax = true;
+       }
+       
+       if (RegenerationValue == Regeneration.Length -1)
+       {
+           RegenerationText.text = "Regeneration  " + Regeneration[RegenerationValue] + "%";
+           RegenerationTextPrice.text = "Max.";
+           RegenerationButtonUI.enabled = false;
+           RegenerationMax = true;
+       }
+       if (SpeedValue == Speed.Length -1)
+       {
+           SpeedText.text = "Speed  " + Speed[SpeedValue] + "%";
+           SpeedTextPrice.text = "Max.";
+           SpeedButtonUI.enabled = false;
+           SpeedMax = true;
+       }
+       if (AttackSpeedValue == AttackSpeed.Length -1)
+       {
+           AttackSpeedText.text = "AttackSpeed  " + AttackSpeed[AttackSpeedValue] + "%";
+           AttackSpeedTextPrice.text = "Max.";
+           AttackSpeedButtonUI.enabled = false;
+           AttackSpeedMax = true;
+       }
+       if (ArmorValue == Armor.Length -1)
+       {
+           ArmorText.text = "Armor  " + Armor[ArmorValue];
+           ArmorTextPrice.text = "Max.";
+           ArmorButtonUI.enabled = false;
+           ArmorMax = true;
+       }
+       if (GloryValue == Glory.Length -1)
+       {
+           GloryText.text = "Glory  " + Glory[GloryValue];
+           GloryTextPrice.text = "Max.";
+           GloryButtonUI.enabled = false;
+           GloryMax = true;
+       }
+       if (GoldValue == Gold.Length -1)
+       {
+           GoldText.text = "Gold  " + Gold[GoldValue] + "%";
+           GoldTextPrice.text = "Max.";
+           GoldButtonUI.enabled = false;
+           GoldMax = true;
+       }
+       if (EXPValue == EXP.Length -1)
+       {
+           EXPText.text = "EXP.  " + EXP[EXPValue] + "%";
+           EXPTextPrice.text = "Max.";
+           EXPButtonUI.enabled = false;
+           EXPMax = true;
+       }
+   }
+
+   void ValueSliderUpdate()
+   {
+       StrengthSlider.value = StrengthValue;
+       DamageSlider.value = DamageValue;
+       RegenerationSlider.value = RegenerationValue;
+       SpeedSlider.value = SpeedValue;
+       AttackSpeedSlider.value = AttackSpeedValue;
+       ArmorSlider.value = ArmorValue;
+       GlorySlider.value = GloryValue;
+       GoldSlider.value = GoldValue;
+       EXPSlider.value = EXPValue;
+   }
+
+   private void OnSaveUpStatus()
+   {
+       //Price
+//       PlayerPrefs.SetInt("priceStrength", priceStrength[priceStrengthValue]); 
+//       PlayerPrefs.SetInt("priceDamage", priceDamage[priceDamageValue]);
+//       PlayerPrefs.SetInt("priceRegeneration ", priceRegeneration[priceRegenerationValue] );
+//       PlayerPrefs.SetInt("priceSpeed", priceSpeed[priceSpeedValue]);
+//       PlayerPrefs.SetInt("priceAttackSpeed", priceAttackSpeed[priceAttackSpeedValue]);
+//       PlayerPrefs.SetInt("priceArmor", priceArmor[priceArmorValue]);
+//       PlayerPrefs.SetInt("priceGlory", priceGlory[priceGloryValue]);
+//       PlayerPrefs.SetInt("priceGold", priceGold[priceGoldValue]);
+//       PlayerPrefs.SetInt("priceEXP", priceEXP[priceEXPValue]);
+       //PriceValue
+       PlayerPrefs.SetInt("priceStrengthValue", priceStrengthValue); 
+       PlayerPrefs.SetInt("priceDamageValue", priceDamageValue);
+       PlayerPrefs.SetInt("priceRegenerationValue ", priceRegenerationValue );
+       PlayerPrefs.SetInt("priceSpeedValue", priceSpeedValue);
+       PlayerPrefs.SetInt("priceAttackSpeedValue", priceAttackSpeedValue);
+       PlayerPrefs.SetInt("priceArmorValue", priceArmorValue);
+       PlayerPrefs.SetInt("priceGloryValue", priceGloryValue);
+       PlayerPrefs.SetInt("priceGoldValue", priceGoldValue);
+       PlayerPrefs.SetInt("priceEXPValue", priceEXPValue);
+       //StatusValue
+       PlayerPrefs.SetInt("StengthValue", StrengthValue);
+       PlayerPrefs.SetInt("DamageValue", DamageValue);
+       PlayerPrefs.SetInt("RegenerationValue", RegenerationValue);
+       PlayerPrefs.SetInt("SpeedValue", SpeedValue);
+       PlayerPrefs.SetInt("AttackSpeedValue", AttackSpeedValue);
+       PlayerPrefs.SetInt("ArmorValue", ArmorValue);
+       PlayerPrefs.SetInt("GloryValue", GloryValue);
+       PlayerPrefs.SetInt("GoldValue", GoldValue);
+       PlayerPrefs.SetInt("EXPValue", EXPValue);
+       //MainStatus
+       PlayerPrefs.SetFloat("Strength",Strength[StrengthValue]);
+       PlayerPrefs.SetFloat("Damage",Damage[DamageValue]);
+       PlayerPrefs.SetFloat("Regeneration",Regeneration[RegenerationValue]);
+       PlayerPrefs.SetFloat("Speed",Speed[SpeedValue]);
+       PlayerPrefs.SetFloat("AttackSpeed",AttackSpeed[AttackSpeedValue]);
+       PlayerPrefs.SetFloat("Armor",Armor[ArmorValue]);
+       PlayerPrefs.SetFloat("Glory",Glory[GloryValue]);
+       PlayerPrefs.SetFloat("Gold",Gold[GoldValue]);
+       PlayerPrefs.SetFloat("EXP",EXP[EXPValue]);
+       
+       //PlayerPrefs.SetFloat("Stamina", MainMenu.moneyBear);
+       PlayerPrefs.Save();
+   }
+
+   private void OnApplicationQuit()
+   {
+       OnSaveUpStatus();
+   }
+
+   public void UpdateText()
+   {
+       if (StrenghMax == false)
+       {
+           StrengthTextPrice.text = "" + priceStrength[priceStrengthValue];
+       }
+       if (DamageMax == false)
+       {
+           DamageTextPrice.text = "" + priceDamage[priceDamageValue];
+       }
+       if (RegenerationMax == false)
+       {
+           RegenerationTextPrice.text = "" + priceRegeneration[priceRegenerationValue];
+       }
+       if (SpeedMax == false)
+       {
+           SpeedTextPrice.text = "" + priceSpeed[priceSpeedValue];
+       }
+       if (AttackSpeedMax == false)
+       {
+           AttackSpeedTextPrice.text = "" + priceAttackSpeed[priceAttackSpeedValue];
+       }
+       if (ArmorMax == false)
+       {
+           ArmorTextPrice.text = "" + priceArmor[priceArmorValue];
+       }
+       if (GloryMax == false)
+       {
+           GloryTextPrice.text = "" + priceGlory[priceGloryValue];
+       }
+       if (GoldMax == false)
+       {
+           GoldTextPrice.text = "" + priceGold[priceGoldValue];
+       }
+       if (EXPMax == false)
+       {
+           EXPTextPrice.text = "" + priceEXP[priceEXPValue];
+       }
+   }
+
+   public void UpDateStatus()
+   {
+       PlayerMovement.Hp = Strength[StrengthValue];
+       PlayerMovement.MaxHp = Strength[StrengthValue];
+       PlayerMovement.Damage = Damage[DamageValue];
+       PlayerMovement.RegenHp = Regeneration[RegenerationValue];
+       PlayerMovement.speedPlayer = Speed[SpeedValue];
+       PlayerMovement.defospeed = Speed[SpeedValue];
+       PlayerMovement.AttackSpeed = AttackSpeed[AttackSpeedValue];
+       PlayerMovement.Armor = Armor[ArmorValue];
+       //Glory
+       HamburgerMenuBar.XGold = Gold[GoldValue];
+       HamburgerMenuBar.XEXP = EXP[EXPValue];
    }
 }

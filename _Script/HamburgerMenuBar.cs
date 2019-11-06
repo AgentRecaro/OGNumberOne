@@ -9,6 +9,8 @@ public class HamburgerMenuBar : MonoBehaviour
 {
     public static int MoneyBear;
     public static int EXPValue;
+    public static float XGold;
+    public static float XEXP;
     public MainMenu Addmoney;
     public LevelSystem AddEXP;
     private bool menuBar = false;
@@ -30,13 +32,13 @@ public class HamburgerMenuBar : MonoBehaviour
         
         if (PlayerMovement.Hp <= 0)
         {
-            EXPValue = EnemyCount.CountEnemydieAll * 2;
-            MoneyBear = EnemyCount.CountEnemydieAll * 10;
+            EXPValue = EnemyCount.CountEnemydieAll * (int)XEXP;
+            MoneyBear = EnemyCount.CountEnemydieAll * (int)XGold;
             FPS.GetComponent<Text>().enabled = false;
             Money.GetComponent<Text>().enabled = true;
             EXP.GetComponent<Text>().enabled = true;
-            EXP.text = "EXP: " + EXPValue;
-            Money.text = "" + MoneyBear;
+            EXP.text = "EXP: " + EXPValue + "  X" + XEXP;
+            Money.text = "" + MoneyBear + "  X" + XGold;
             menuBar = true;
             //Time.timeScale = 0f;
             Menubar.SetActive(true);
@@ -60,14 +62,6 @@ public class HamburgerMenuBar : MonoBehaviour
             Menubar.SetActive(true);
         }
     }
-        
-    public void RestartGame()
-    {
-        SceneManager.LoadScene("Stage_01");
-        Time.timeScale = 1f;
-        PlayerMovement.Hp = 100;
-        EnemyCount.CountEnemydie = 0;
-    }
 
     public void _Quit()
     {
@@ -82,7 +76,7 @@ public class HamburgerMenuBar : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
         Time.timeScale = 1f;
         EnemyCount.CountEnemydie = 0;
-        PlayerMovement.Hp = 100;
+        PlayerMovement.Hp = PlayerMovement.MaxHp;
         PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
         EventComboGame.SaveNameCombo = 0;
         EventComboGame.Combo = 0;
