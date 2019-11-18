@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class HamburgerMenuBar : MonoBehaviour
 {
+    public static bool ShowFPS;
     public static int MoneyBear;
     public static int EXPValue;
     public static float XGold;
@@ -22,7 +23,7 @@ public class HamburgerMenuBar : MonoBehaviour
 
     private void Start()
     {
-        Application.targetFrameRate = 300;
+        //Application.targetFrameRate = 300;
         FPS = GameObject.Find("FPS");
         Menubar.SetActive(false);
     }
@@ -43,20 +44,34 @@ public class HamburgerMenuBar : MonoBehaviour
             //Time.timeScale = 0f;
             Menubar.SetActive(true);
         }
+
+        if (ShowFPS == true)
+        {
+            FPS.GetComponent<Text>().enabled = true;
+        }
+        else
+        {
+            FPS.GetComponent<Text>().enabled = false;
+        }
     }
 
     public void HamburgerMenu()
     {
         if (menuBar == true)
         {
-            FPS.GetComponent<Text>().enabled = true;
+            //FPS.GetComponent<Text>().enabled = true;
+            if (SettingSystem.showFPSvalue == 1)
+            {
+                ShowFPS = true;
+            }
             menuBar = false;
             Time.timeScale = 1f;
             Menubar.SetActive(false);
         }
         else 
         {
-            FPS.GetComponent<Text>().enabled = false;
+            //FPS.GetComponent<Text>().enabled = false;
+            ShowFPS = false;
             menuBar = true;
             Time.timeScale = 0f;
             Menubar.SetActive(true);
@@ -80,6 +95,24 @@ public class HamburgerMenuBar : MonoBehaviour
         PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
         EventComboGame.SaveNameCombo = 0;
         EventComboGame.Combo = 0;
+        SpawnCombo.spawn = false;
         Destroy(GameObject.FindGameObjectWithTag("Combo"));
+        spawnSelectabilitySystem.ButtonFireBlade = true;
+        spawnSelectabilitySystem.ButtonPrisonBlade = true;
+        spawnSelectabilitySystem.ButtonShockBlade = true;
+        spawnSelectabilitySystem.ButtonIceBlade = true;
+        spawnSelectabilitySystem.ButtonFireOrb = true;
+        spawnSelectabilitySystem.ButtonPrisonOrb = true;
+        spawnSelectabilitySystem.ButtonShockOrb = true;
+        spawnSelectabilitySystem.ButtonIceOrb = true;
+
+        spawnSelectabilitySystem.EffectFireBlade = false;
+        spawnSelectabilitySystem.EffectPoisonBlade = false;
+        spawnSelectabilitySystem.EffectShockBlade = false;
+        spawnSelectabilitySystem.EffectIceBlade = false;
+        spawnSelectabilitySystem.EffectFireOrb = false;
+        spawnSelectabilitySystem.EffectPrisonOrb = false;
+        spawnSelectabilitySystem.EffectShockOrb = false;
+        spawnSelectabilitySystem.EffectIceOrb = false;
     }
 }

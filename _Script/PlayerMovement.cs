@@ -37,13 +37,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     { 
-        
+//        //TestFX
+//        Hp = 100;
+//        speedPlayer = 3;
+        PlayerPrefs.GetFloat("Speed", speedPlayer);
         _movement = GameObject.FindGameObjectWithTag("Unicon").GetComponent<Animator>();
         HealthBarPlayer = GameObject.FindGameObjectWithTag("HPBar").GetComponent<Slider>();
         _Sword = GameObject.FindGameObjectWithTag("Sword");
         //defospeed = speedPlayer;
         HealthBarPlayer.maxValue = MaxHp;
         HealthBarPlayer.value = Hp;
+        _movement.SetFloat("AttackSpeed",AttackSpeed);
         print(Hp);
         print(Damage);
         print(RegenHp);
@@ -61,8 +65,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(speedPlayer);
-        print(defospeed);
         _PlayerDie();
         MovementPlayer();
         if (Hp <= 0)
@@ -137,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_Enemy.gameObject.tag == "SwordEnemy")
         {
+            DamageEnemy = DamageEnemy - Armor;
             Hp = Hp - DamageEnemy;
             Debug.Log("<color=red>PlayerDie GameOver</color>");
         }
@@ -169,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
                 roll = false;
                 _movement.SetBool("Run", false);
                 _movement.SetBool("Idle", true);
+                Hp += RegenHp * Time.deltaTime;
             }
         }
     }

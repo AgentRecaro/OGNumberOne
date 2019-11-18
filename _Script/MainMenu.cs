@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject UIShop = null;
     [SerializeField] private GameObject UISetting = null;
     [SerializeField] private GameObject ButtonGamePlay = null;
+    [SerializeField] private GameObject CharactorPlayer = null;
+    [SerializeField] private GameObject FloorCharactor = null;
     [SerializeField] private Text MoneyBearText = null;
     [SerializeField] private Text GemText = null;
     [SerializeField] private Text StaminaText = null;
@@ -75,11 +77,15 @@ public class MainMenu : MonoBehaviour
         {
             UIInventory.SetActive(true);
             GameObject.Find("Button Inventory").GetComponent<Button>().interactable = false;
+            CharactorPlayer.SetActive(true);
+            FloorCharactor.SetActive(true);
         }
         else
         {
             UIInventory.SetActive(false);
             GameObject.Find("Button Inventory").GetComponent<Button>().interactable = true;
+            CharactorPlayer.SetActive(false);
+            FloorCharactor.SetActive(false);
         }
 
         if (Shop == true)
@@ -160,6 +166,9 @@ public class MainMenu : MonoBehaviour
         HamburgerMenuBar.EXPValue = 0;
         StaminaValue -= 5;
         PlayerPrefs.SetFloat("Stamina",StaminaValue);
+        LevelSyStemInGame.LevelInGame = 1;
+        LevelSyStemInGame.EXPInGame = 0;
+        LevelSyStemInGame.MaxEXPInGame = 10;
     }
 
     private void OnApplicationFocus()

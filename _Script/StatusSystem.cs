@@ -87,6 +87,7 @@ public class StatusSystem : MonoBehaviour
     [SerializeField] private Text GloryTextPrice = null;
     [SerializeField] private Text GoldTextPrice = null;
     [SerializeField] private Text EXPTextPrice = null;
+    [SerializeField] private InputField textConsole = null; 
 
 
     // Start is called before the first frame update
@@ -110,7 +111,7 @@ public class StatusSystem : MonoBehaviour
         Regeneration = new float[]{ 0, 0.25f, 0.3f, 0.5f, 0.75f, 1f};//Value= 6
         Speed = new float[]{ 5f, 5.25f, 5.55f, 6.05f, 6.8f, 7.8f};//Value= 6
         AttackSpeed = new float[]{ 3, 3.25f, 3.55f, 4.05f, 4.8f, 5.8f};//Value= 6
-        Armor = new float[]{ 100, 120, 150, 200, 270, 370};//Value= 6
+        Armor = new float[]{ 0, 20, 50, 100, 170, 270};//Value= 6
         Glory = new float[]{ 0, 1};//Value= 2
         Gold = new float[]{ 10f, 10.5f, 11.25f, 12.25f, 13.75f, 15.75f};//Value= 6
         EXP = new float[]{ 2f, 2.25f, 2.55f, 3.05f, 3.8f, 4.8f};//Value= 6
@@ -198,6 +199,7 @@ public class StatusSystem : MonoBehaviour
     {
         //SpeedText.text = "Speed  " + Speed[SpeedValue];
         dataUpdate();
+        //UpdateText();
         OnSaveUpStatus();
         ValueSliderUpdate();
         PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
@@ -612,8 +614,90 @@ public class StatusSystem : MonoBehaviour
        PlayerMovement.defospeed = Speed[SpeedValue];
        PlayerMovement.AttackSpeed = AttackSpeed[AttackSpeedValue];
        PlayerMovement.Armor = Armor[ArmorValue];
-       //Glory
+       spawnSelectabilitySystem.Glory = Glory[GloryValue];
        HamburgerMenuBar.XGold = Gold[GoldValue];
        HamburgerMenuBar.XEXP = EXP[EXPValue];
+   }
+
+   public void ResetStatus()
+   {
+       if (textConsole.text == "Reset")
+       { 
+           
+           Strength[StrengthValue] = Strength[0];
+           Damage[DamageValue] = Damage[0];
+           Regeneration[RegenerationValue] = Regeneration[0];
+           Speed[SpeedValue] = Speed[0];
+           AttackSpeed[AttackSpeedValue] = AttackSpeed[0];
+           Armor[ArmorValue] = Armor[0];
+           Glory[GloryValue] = Glory[0];
+           Gold[GoldValue] = Gold[0];
+           EXP[EXPValue] = EXP[0];
+
+           StrengthValue = 0;
+           DamageValue = 0;
+           RegenerationValue = 0;
+           SpeedValue = 0;
+           AttackSpeedValue = 0;
+           ArmorValue = 0;
+           GloryValue = 0;
+           GoldValue = 0;
+           EXPValue = 0;
+
+           priceStrengthValue = 0;
+           priceDamageValue = 0;
+           priceRegenerationValue = 0;
+           priceSpeedValue = 0;
+           priceAttackSpeedValue = 0;
+           priceArmorValue = 0;
+           priceGloryValue = 0;
+           priceGoldValue = 0;
+           priceEXPValue = 0;
+
+           GoldTextPrice.text = "" + priceGold[priceGoldValue];
+           EXPTextPrice.text = "" + priceEXP[priceEXPValue];
+           StrengthTextPrice.text = "" + priceStrength[priceStrengthValue];
+           DamageTextPrice.text = "" + priceDamage[priceDamageValue];
+           RegenerationTextPrice.text = "" + priceRegeneration[priceRegenerationValue];
+           SpeedTextPrice.text = "" + priceSpeed[priceSpeedValue];
+           AttackSpeedTextPrice.text = "" + priceAttackSpeed[priceAttackSpeedValue];
+           ArmorTextPrice.text = "" + priceArmor[priceArmorValue];
+           GloryTextPrice.text = "" + priceGlory[priceGloryValue];
+       
+           //TextValue
+           StrengthText.text = "Strength  " + Strength[StrengthValue];
+           DamageText.text = "Damage  " + Damage[DamageValue];
+           RegenerationText.text = "Regeneration  " + Regeneration[RegenerationValue] + "%";
+           SpeedText.text = "Speed  " + Speed[SpeedValue] + "%";
+           AttackSpeedText.text = "AttackSpeed  " + AttackSpeed[AttackSpeedValue] + "%";
+           ArmorText.text = "Armor  " + Armor[ArmorValue];
+           GloryText.text = "Glory  " + Glory[GloryValue];
+           GoldText.text = "Gold  " + Gold[GoldValue] + "%";
+           EXPText.text = "EXP.  " + EXP[EXPValue] + "%";
+
+           StrenghMax = false;
+           DamageMax = false;
+           RegenerationMax = false;
+           SpeedMax = false;
+           AttackSpeedMax = false;
+           ArmorMax = false;
+           GloryMax = false;
+           GoldMax = false;
+           EXPMax = false;
+
+           StrengthButtonUI.enabled = true;
+           DamageButtonUI.enabled = true;
+           RegenerationButtonUI.enabled = true;
+           SpeedButtonUI.enabled = true;
+           AttackSpeedButtonUI.enabled = true;
+           ArmorButtonUI.enabled = true;
+           GloryButtonUI.enabled = true;
+           GoldButtonUI.enabled = true;
+           EXPButtonUI.enabled = true;
+
+           textConsole.text = "";
+           OnSaveUpStatus();
+       }
+      
    }
 }

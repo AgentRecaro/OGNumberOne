@@ -11,6 +11,7 @@ public class OverAll : MonoBehaviour
     void Start()
     {
         TimeInApp = PlayerPrefs.GetFloat("TimeInApp", 0);
+        Application.targetFrameRate = 300;
         //OnApplicationFocus();
     }
 
@@ -56,6 +57,7 @@ public class OverAll : MonoBehaviour
         PlayerPrefs.SetFloat("Stamina", MainMenu.StaminaValue);
         PlayerPrefs.SetInt("MoneyBear",MainMenu.moneyBear);
         //PlayerPrefs.SetInt("MoneyBear",18400);
+        PlayerPrefs.SetInt("ShowFPS", SettingSystem.showFPSvalue);
         PlayerPrefs.Save();
         print("Quit");
     }

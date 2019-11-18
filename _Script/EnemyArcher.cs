@@ -6,23 +6,29 @@ using UnityEngine.UI;
 public class EnemyArcher : MonoBehaviour
 {
      private bool enemyDie = false;
+     private bool speedON = false;
+     private bool FireOn = false;
+     private bool PrisonOn = false;
+     private bool BladeFireOn = false;
+     private bool BladePrisonOn = false;
     [SerializeField] private GameObject _player;
     [SerializeField] private int _score = 0;
     [SerializeField] private float _distancePlay;
     [SerializeField] private Animator _animator = null;
-    [SerializeField] private float _speed = 2;
+    [SerializeField] private float _speed = 0;
     [SerializeField] private float _Hp;
     [SerializeField] private Vector3 directionToTarget;
     [SerializeField] private Quaternion rotationToTarget;
     [SerializeField] private GameObject spawnArrow = null;
     [SerializeField] private Slider HpEnemy = null;
+    [SerializeField] private int EXPPlayerInGame = 0;
     //[SerializeField] private GameObject arrow = null;
 
     private void Start()
     {
         _player = GameObject.Find("Player");
         HpEnemy.maxValue = _Hp;
-        HpEnemy.direction = Slider.Direction.RightToLeft;
+        //HpEnemy.direction = Slider.Direction.RightToLeft;
         //_animator = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Animator>();
     }
 
@@ -77,6 +83,7 @@ public class EnemyArcher : MonoBehaviour
             EnemyCount.CountEnemydie = EnemyCount.CountEnemydie + 1;
             EnemyCount.CountEnemydieAll = EnemyCount.CountEnemydieAll + 1;
             GetComponent<EnemyArcher>().enabled = false;
+            LevelSyStemInGame.EXPInGame += EXPPlayerInGame;
 
         }
 
@@ -86,6 +93,28 @@ public class EnemyArcher : MonoBehaviour
             _animator.SetBool("AttackOn", false);
             _animator.SetBool("Run", false);
             _speed = 0;
+        }
+        
+        if (FireOn == true)
+        {
+            _Hp -= 0.15f * PlayerMovement.Damage * Time.deltaTime;
+            TimeFireOff();
+        }
+
+        if (PrisonOn == true)
+        {
+            _Hp -= 0.3f * PlayerMovement.Damage * Time.deltaTime;
+        }
+
+        if (BladeFireOn == true)
+        {
+            _Hp -= 0.15f * PlayerMovement.Damage * Time.deltaTime;
+            TimeBladeFireOff();
+        }
+
+        if (BladePrisonOn == true)
+        {
+            _Hp -= 0.3f * PlayerMovement.Damage * Time.deltaTime;
         }
     }
 
@@ -102,6 +131,68 @@ public class EnemyArcher : MonoBehaviour
             _GUI._Score += _score;
             EventComboGame.Combo += 10;
         }
+        
+        if (EnemyAttack.gameObject.tag == "FireOrb")
+        {
+            //print("FireOrbAttackEnemy");
+            FireOn = true;
+        }
+
+        if (EnemyAttack.gameObject.tag == "PrisonOrb")
+        {
+            //print("PrisonOrbAttackEnemy");
+            PrisonOn = true;
+        }
+
+        if (EnemyAttack.gameObject.tag == "ShockOrb")
+        {
+            //print("ShockOrbAttackEnemy");
+            _Hp -= 0.25f * PlayerMovement.Damage;
+        }
+
+        if (EnemyAttack.gameObject.tag == "IceOrb")
+        {
+            speedON = false;
+            //print("IceOrbAttackEnemy");
+            _speed = 0.5f;
+        }
+        
+        if (EnemyAttack.gameObject.tag == "BladeFireCollider")
+        {
+            //print("BladeFireColliderAttackEnemy");
+            BladeFireOn = true;
+        }
+
+        if (EnemyAttack.gameObject.tag == "BladePrisonCollider")
+        {
+            //print("BladePrisonColliderAttackEnemy");
+            BladePrisonOn = true;
+        }
+
+        if (EnemyAttack.gameObject.tag == "BladeShockCollider")
+        {
+            //print("BladeShockColliderAttackEnemy");
+            _Hp -= 0.25f * PlayerMovement.Damage;
+        }
+
+        if (EnemyAttack.gameObject.tag == "BladeIceCollider")
+        {
+            speedON = false;
+            //print("BladeIceColliderAttackEnemy");
+            _speed = 0.5f;
+        }
+    }
+    
+    IEnumerator TimeFireOff()
+    {
+        yield return  new WaitForSecondsRealtime(7);
+        FireOn = false;
+    }
+
+    IEnumerator TimeBladeFireOff()
+    {
+        yield return  new WaitForSecondsRealtime(7);
+        BladeFireOn = false;
     }
 
     public void SpawnArrow()
@@ -119,12 +210,18 @@ public class EnemyArcher : MonoBehaviour
 
     public void EnemySpeedLow()
     {
+        if (speedON == true)
+        {
+            _speed = 0;
+        }
         _animator.SetBool("Run", false);
-        _speed = 0;
     }
     public void Run()
     {
-        _speed = 2;
+        if (speedON == true)
+        {
+            _speed = 2;
+        }
         _animator.SetBool("AttackOn", false);
     }
 
