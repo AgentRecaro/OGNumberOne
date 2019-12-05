@@ -26,7 +26,6 @@ public class LevelSystem : MonoBehaviour
             MaxEXP = 75;
             EXP = 0;
         }
-
         if (EXPSlider.value == 75 && Level == 2)
         {
             Level = 3;

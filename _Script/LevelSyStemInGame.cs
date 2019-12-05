@@ -16,7 +16,7 @@ public class LevelSyStemInGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //CanvasSkil = GameObject.FindGameObjectWithTag("RandomSkillCanvas");
     }
 
     // Update is called once per frame
@@ -31,6 +31,7 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
 
         if (EXPInGameSlider.value == 16 && LevelInGame == 2)
@@ -41,6 +42,7 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
         
         if (EXPInGameSlider.value == 24 && LevelInGame == 3)
@@ -51,7 +53,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 30 && LevelInGame == 4)
         {
             LevelInGame = 5;
@@ -60,7 +64,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 36 && LevelInGame == 5)
         {
             LevelInGame = 6;
@@ -69,7 +75,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 40 && LevelInGame == 6)
         {
             LevelInGame = 7;
@@ -78,7 +86,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 40 && LevelInGame == 7)
         {
             LevelInGame = 8;
@@ -87,7 +97,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 44 && LevelInGame == 8)
         {
             LevelInGame = 9;
@@ -96,7 +108,9 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
+        
         if (EXPInGameSlider.value == 44 && LevelInGame == 9)
         {
             LevelInGame = 10;
@@ -105,9 +119,15 @@ public class LevelSyStemInGame : MonoBehaviour
             Time.timeScale = 0f;
             spawnSelectabilitySystem.CanvasSkill = true;
             CanvasSkil.GetComponent<Canvas>().enabled = true;
+            RegentHp();
         }
         
         EXPInGameSlider.value = EXPInGame;
         EXPInGameSlider.maxValue = MaxEXPInGame;
+    }
+
+    void RegentHp()
+    {
+        PlayerMovement.Hp = PlayerMovement.MaxHp;
     }
 }

@@ -95,25 +95,25 @@ public class StatusSystem : MonoBehaviour
     {
 
         //Price
-        priceStrength = new int[]{ 200, 250, 350, 500, 750};
-        priceDamage = new int[]{ 200, 250, 350, 500, 750};
-        priceRegeneration = new int[]{ 200, 250, 350, 500, 750};
-        priceSpeed = new int[]{ 200, 250, 350, 500, 750};
-        priceAttackSpeed = new int[]{ 200, 250, 350, 500, 750};
-        priceArmor = new int[]{ 200, 250, 350, 500, 750};
+        priceStrength = new int[]{ 200, 500, 800, 1200, 1800};
+        priceDamage = new int[]{ 200, 500, 800, 1200, 1800};
+        priceRegeneration = new int[]{ 200, 500, 800, 1200, 1800};
+        priceSpeed = new int[]{ 200, 500, 800, 1200, 1800};
+        priceAttackSpeed = new int[]{ 200, 500, 800, 1200, 1800};
+        priceArmor = new int[]{ 200, 500, 800, 1200, 1800};
         priceGlory = new int[]{ 2000};
-        priceGold = new int[]{ 200, 250, 350, 500, 750};
-        priceEXP = new int[]{ 200, 250, 350, 500, 750};
+        priceGold = new int[]{ 200, 500, 800, 1200, 1800};
+        priceEXP = new int[]{ 200, 500, 800, 1200, 1800};
 
         //MainStatus
-        Strength = new float[]{ 100, 110, 130, 160, 210, 280};//Value= 6
+        Strength = new float[]{ 100, 150, 220, 300, 400, 550};//Value= 6
         Damage = new float[]{ 100, 110, 130, 160, 200, 250};//Value= 6
         Regeneration = new float[]{ 0, 0.25f, 0.3f, 0.5f, 0.75f, 1f};//Value= 6
         Speed = new float[]{ 5f, 5.25f, 5.55f, 6.05f, 6.8f, 7.8f};//Value= 6
         AttackSpeed = new float[]{ 3, 3.25f, 3.55f, 4.05f, 4.8f, 5.8f};//Value= 6
-        Armor = new float[]{ 0, 20, 50, 100, 170, 270};//Value= 6
+        Armor = new float[]{ 0, 10, 15, 25, 50, 70};//Value= 6
         Glory = new float[]{ 0, 1};//Value= 2
-        Gold = new float[]{ 10f, 10.5f, 11.25f, 12.25f, 13.75f, 15.75f};//Value= 6
+        Gold = new float[]{ 5f, 5.5f, 6.25f, 7.25f, 8.75f, 10.75f};//Value= 6
         EXP = new float[]{ 2f, 2.25f, 2.55f, 3.05f, 3.8f, 4.8f};//Value= 6
         
         //Price

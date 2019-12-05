@@ -15,6 +15,7 @@ public class EventGame : MonoBehaviour
             SceneManager.LoadScene(snecename);
             EnemyCount.CountEnemydie = 0;
             PlayerPrefs.SetString("NameCombo", EventComboGame.NameComBo[EventComboGame.SaveNameCombo]);
+            PlayerMovement.speedPlayer = PlayerMovement.defospeed;
         }
     }
 }

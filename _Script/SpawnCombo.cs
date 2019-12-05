@@ -35,7 +35,6 @@ public class SpawnCombo : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Combo"));
             EventComboGame.SaveNameCombo = 0;
             EventComboGame.Combo = 0;
-            
         }
     }
 
@@ -43,10 +42,13 @@ public class SpawnCombo : MonoBehaviour
     {
         if (enemy.gameObject.tag == "Enemy")
         {
-            
+
             if (spawn == false)
             {
-                Instantiate(Resources.Load("ComBoCanvas"),position.position, Quaternion.identity,GameObject.FindGameObjectWithTag("Canvas").transform);
+                DeleteDamage();
+                EventComboGame.DamageOn = true;
+                Instantiate(Resources.Load("ComBoCanvas"), position.position, Quaternion.identity,
+                    GameObject.FindGameObjectWithTag("Canvas").transform);
                 spawn = true;
                 timedestroy += 5;
             }
@@ -69,6 +71,35 @@ public class SpawnCombo : MonoBehaviour
             {
                 destroycobo = 0.3f;
             }
+
+        }
+    }
+
+    void DeleteDamage()
+    {
+        if (EventComboGame.DamageD == true)
+        {
+            PlayerMovement.Damage -= 10;
+        }
+
+        if (EventComboGame.DamageC == true)
+        {
+            PlayerMovement.Damage -= 30;
+        }
+
+        if (EventComboGame.DamageB == true)
+        {
+            PlayerMovement.Damage -= 60;
+        }
+
+        if (EventComboGame.DamageA == true)
+        {
+            PlayerMovement.Damage -= 100;
+        }
+
+        if (EventComboGame.DamageS == true)
+        {
+            PlayerMovement.Damage -= 150;
         }
     }
 }

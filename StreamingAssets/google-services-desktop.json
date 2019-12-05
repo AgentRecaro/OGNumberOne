@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "275985484219",
+    "firebase_url": "https://alphaproject-ddbb5.firebaseio.com",
+    "project_id": "alphaproject-ddbb5",
+    "storage_bucket": "alphaproject-ddbb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275985484219:android:54b36ed8e82641a3641c9e",
+        "android_client_info": {
+          "package_name": "Projectnumberone.AlphaProject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275985484219-0n7749igjufcl4fcfb26lcaejuur93r1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcbydzbK8jmSwKrKnJAWhCDZ8_dSGGNRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275985484219-0n7749igjufcl4fcfb26lcaejuur93r1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

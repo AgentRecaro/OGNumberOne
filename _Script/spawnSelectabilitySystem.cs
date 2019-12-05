@@ -72,22 +72,23 @@ public class spawnSelectabilitySystem : MonoBehaviour
 //            GameObject.FindGameObjectWithTag("CanvasRandomSkill").transform.position, Quaternion.identity,
 //            GameObject.FindGameObjectWithTag("CanvasRandomSkill").transform);
         
-        NumberList = new List<int>(new int[ButtonPivot.Length]);
-        for (int i = 0; i < ButtonPivot.Length; i++)
-        {
-            Number = Random.Range(0, (ButtonSkill.Length));
-            while (NumberList.Contains(Number))
-            {
-                Number = Random.Range(0, (ButtonSkill.Length));
-            }
-
-            NumberList[i] = Number;
-            ButtonSkill[NumberList[i]].GetComponent<Transform>().position = ButtonPivot[i].GetComponent<Transform>().position;
-            
-//                        Instantiate(ButtonSkill[(NumberList[i] - 1)], ButtonPivot[i].transform.position, Quaternion.identity,
-//                GameObject.FindGameObjectWithTag("SpawnSkill").transform);
-//            ButtonSkill[(NumberList[i] - 1)].SetActive(true);
-        }
+//        NumberList = new List<int>(new int[ButtonPivot.Length]);
+//        for (int i = 0; i < ButtonPivot.Length; i++)
+//        {
+//            Number = Random.Range(0, (ButtonSkill.Length));
+//            while (NumberList.Contains(Number))
+//            {
+//                Number = Random.Range(0, (ButtonSkill.Length));
+//            }
+//
+//            NumberList[i] = Number;
+//            ButtonSkill[NumberList[i]].GetComponent<Transform>().position = ButtonPivot[i].GetComponent<Transform>().position;
+//            
+////                        Instantiate(ButtonSkill[(NumberList[i] - 1)], ButtonPivot[i].transform.position, Quaternion.identity,
+////                GameObject.FindGameObjectWithTag("SpawnSkill").transform);
+////            ButtonSkill[(NumberList[i] - 1)].SetActive(true);
+//        }
+        StartCoroutine(TimeSpawnSkill());
     }
     
     // Update is called once per frame
@@ -96,7 +97,21 @@ public class spawnSelectabilitySystem : MonoBehaviour
 //        gameObjectsList = new List<GameObject>(ButtonSkill);
 //        gameObjectsList.RemoveAll(gameObject => gameObject == null);
 //        ButtonSkill = gameObjectsList.ToArray();
-        ButtonSkill = ButtonSkill.Where(x => x != null).ToArray();
+        //ButtonSkill = ButtonSkill.Where(x => x != null).ToArray();
+
+        for (int i = 0; i < ButtonSkill.Length; i++)
+        {
+            if (ButtonSkill[i] == null)
+            {
+                int Value = Random.Range(0, 6);
+//                Instantiate(ButtonSkill[Value],
+//                    GameObject.FindGameObjectWithTag("SpawnButtonFx").transform.position, Quaternion.identity,
+//                    GameObject.FindGameObjectWithTag("SpawnButtonFx").transform);
+                ButtonSkill[i] = Instantiate(ButtonSkill[Value],
+                    GameObject.FindGameObjectWithTag("SpawnButtonFx").transform.position, Quaternion.identity,
+                    GameObject.FindGameObjectWithTag("SpawnButtonFx").transform);;
+            }
+        }
     }
 
     public void Reset()
@@ -207,9 +222,9 @@ public class spawnSelectabilitySystem : MonoBehaviour
 //        ButtonShockOrb = true;
 //        ButtonIceOrb = true;
 
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.7f);
         Reset();
-        print("Reset");
+        //print("Reset");
     }
 
     public void DamageUpOn()
@@ -264,6 +279,7 @@ public class spawnSelectabilitySystem : MonoBehaviour
         CanvasButtonOff();
         ButtonFireBlade = false;
         EffectFireBlade = true;
+        AttackPlayer.FireBladeOn = true;
         Destroy( GameObject.FindGameObjectWithTag("ButtonFire Blade"), 1);
 
         Instantiate(Resources.Load("FireBladeCollider"),
@@ -274,7 +290,7 @@ public class spawnSelectabilitySystem : MonoBehaviour
             GameObject.FindGameObjectWithTag("PivotSpawnBladeCollider").transform.position,
             GameObject.FindGameObjectWithTag("PivotSpawnBladeCollider").transform.rotation,
             GameObject.FindGameObjectWithTag("PivotSpawnBladeCollider").transform);
-        
+
         if (ButtonFireBlade == false)
         {
             StartCoroutine(TimeSpawnSkill());
@@ -286,6 +302,7 @@ public class spawnSelectabilitySystem : MonoBehaviour
         CanvasButtonOff();
         ButtonPrisonBlade = false;
         EffectPoisonBlade = true;
+        AttackPlayer.PoisonBladeOn = true;
         Destroy( GameObject.FindGameObjectWithTag("ButtonPrison Blade"), 1);
         
         Instantiate(Resources.Load("PrisonBladeCollider"),
@@ -308,6 +325,7 @@ public class spawnSelectabilitySystem : MonoBehaviour
         CanvasButtonOff();
         ButtonShockBlade = false;
         EffectShockBlade = true;
+        AttackPlayer.ShockBladeOn = true;
         Destroy( GameObject.FindGameObjectWithTag("ButtonShock Blade"), 1);
         
         Instantiate(Resources.Load("ShockBladeCollider"),
@@ -331,6 +349,7 @@ public class spawnSelectabilitySystem : MonoBehaviour
         CanvasButtonOff();
         ButtonIceBlade = false;
        EffectIceBlade = true;
+       AttackPlayer.IceBladeOn = true;
        Destroy( GameObject.FindGameObjectWithTag("ButtonIce Blade"), 1);
        
        Instantiate(Resources.Load("IceBladeCollider"),

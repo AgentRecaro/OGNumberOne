@@ -14,18 +14,29 @@ public class HamburgerMenuBar : MonoBehaviour
     public static float XEXP;
     public MainMenu Addmoney;
     public LevelSystem AddEXP;
+    public static bool AdReward = false;
     private bool menuBar = false;
+    private bool TextReWrad = false;
     [SerializeField] private Text Money = null;
     [SerializeField] private Text EXP = null;
     [SerializeField] private GameObject Menubar = null;
     [SerializeField] private GameObject FPS = null;
-    
+    [SerializeField] private GameObject ButtonResume = null;
+    [SerializeField] private GameObject ButtonAdReward = null;
+    [SerializeField] private GameObject ButtonShare = null;
+    [SerializeField] private Image UiHamburgerMenubar = null;
+    [SerializeField] private Sprite UiYouDead = null;
+    [SerializeField] private Sprite UiPause = null;
+    [SerializeField] private Sprite UiComplete = null;
 
     private void Start()
     {
         //Application.targetFrameRate = 300;
         FPS = GameObject.Find("FPS");
         Menubar.SetActive(false);
+        ButtonAdReward.SetActive(false);
+        ButtonShare.SetActive(false);
+        AdReward = false;
     }
 
     private void Update()
@@ -33,16 +44,51 @@ public class HamburgerMenuBar : MonoBehaviour
         
         if (PlayerMovement.Hp <= 0)
         {
+            FPS.GetComponent<Text>().enabled = false;
+            Money.GetComponent<Text>().enabled = true;
+            EXP.GetComponent<Text>().enabled = true;
+            if (TextReWrad == false)
+            {
+                EXPValue = EnemyCount.CountEnemydieAll * (int)XEXP;
+                MoneyBear = EnemyCount.CountEnemydieAll * (int)XGold;
+                EXP.text = "" + EXPValue;
+                Money.text = "" + MoneyBear;
+            }
+            
+            menuBar = true;
+            //Time.timeScale = 0f;
+            Menubar.SetActive(true);
+            ButtonAdReward.SetActive(true);
+            ButtonShare.SetActive(true);
+            ShowFPS = false;
+            UiHamburgerMenubar.sprite = UiYouDead;
+        }
+
+        if (AdReward == true)
+        {
+//            EXPValue = EXPValue * 2;
+            MoneyBear = MoneyBear * 2;
+            EXP.text = "" + EXPValue;
+            Money.text = "" + MoneyBear;
+            ButtonAdReward.SetActive(false);
+            AdReward = false;
+            TextReWrad = true;
+        }
+
+        if (EventComplete.CompleteTrue == true)
+        {
             EXPValue = EnemyCount.CountEnemydieAll * (int)XEXP;
             MoneyBear = EnemyCount.CountEnemydieAll * (int)XGold;
             FPS.GetComponent<Text>().enabled = false;
             Money.GetComponent<Text>().enabled = true;
             EXP.GetComponent<Text>().enabled = true;
-            EXP.text = "EXP: " + EXPValue + "  X" + XEXP;
-            Money.text = "" + MoneyBear + "  X" + XGold;
+            EXP.text = "" + EXPValue;
+            Money.text = "" + MoneyBear;
             menuBar = true;
-            //Time.timeScale = 0f;
             Menubar.SetActive(true);
+            ButtonShare.SetActive(true);
+            ShowFPS = false;
+            UiHamburgerMenubar.sprite = UiComplete;
         }
 
         if (ShowFPS == true)
@@ -57,6 +103,7 @@ public class HamburgerMenuBar : MonoBehaviour
 
     public void HamburgerMenu()
     {
+        UiHamburgerMenubar.sprite = UiPause;
         if (menuBar == true)
         {
             //FPS.GetComponent<Text>().enabled = true;
@@ -67,6 +114,7 @@ public class HamburgerMenuBar : MonoBehaviour
             menuBar = false;
             Time.timeScale = 1f;
             Menubar.SetActive(false);
+            ButtonResume.SetActive(false);
         }
         else 
         {
@@ -75,6 +123,7 @@ public class HamburgerMenuBar : MonoBehaviour
             menuBar = true;
             Time.timeScale = 0f;
             Menubar.SetActive(true);
+            ButtonResume.SetActive(true);
         }
     }
 
@@ -114,5 +163,16 @@ public class HamburgerMenuBar : MonoBehaviour
         spawnSelectabilitySystem.EffectPrisonOrb = false;
         spawnSelectabilitySystem.EffectShockOrb = false;
         spawnSelectabilitySystem.EffectIceOrb = false;
+
+        AttackPlayer.FireBladeOn = false;
+        AttackPlayer.PoisonBladeOn = false;
+        AttackPlayer.ShockBladeOn = false;
+        AttackPlayer.IceBladeOn = false;
+
+        EventComboGame.DamageD = false;
+        EventComboGame.DamageC = false;
+        EventComboGame.DamageB = false;
+        EventComboGame.DamageA = false;
+        EventComboGame.DamageS = false;
     }
 }

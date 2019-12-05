@@ -8,7 +8,10 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public static int moneyBear;
+    public static int Soul;
     public static float StaminaValue;
+    public static float ScoreValue;
+    public static float HighScore;
     public bool Map = false;
     public bool Status = false;
     public bool Inventory = false;
@@ -24,6 +27,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Text MoneyBearText = null;
     [SerializeField] private Text GemText = null;
     [SerializeField] private Text StaminaText = null;
+    [SerializeField] private Text HighScoreText = null;
     [SerializeField] private Slider StaminaSlider = null;
 
     // Start is called before the first frame update
@@ -35,8 +39,11 @@ public class MainMenu : MonoBehaviour
         LevelSystem.EXP = PlayerPrefs.GetInt("EXPPlayer",LevelSystem.EXP);
         LevelSystem.Level = PlayerPrefs.GetInt("LevelPlayer", LevelSystem.Level);
         moneyBear = PlayerPrefs.GetInt("MoneyBear", moneyBear);
+        Soul = PlayerPrefs.GetInt("Soul", Soul);
         StaminaValue = PlayerPrefs.GetFloat("Stamina", StaminaValue);
-
+        UISetting.GetComponent<Canvas>().enabled = false;
+        HighScoreText.text = "" +HighScore;
+        ScoreValue = HamburgerMenuBar.EXPValue;
     }
 
     private void Awake()
@@ -47,10 +54,17 @@ public class MainMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (ScoreValue >= HighScore)
+        {
+            HighScoreText.text = "" +HighScore;
+            HighScore = ScoreValue;
+        }
         OnApplicationFocus();
         StaminaSlider.value = StaminaValue;
         MoneyBearText.text = moneyBear.ToString();
         StaminaText.text = StaminaValue + "/30";
+        GemText.text = "" + Soul;
+        PlayerPrefs.SetInt("Soul",Soul);
         if (Map == true)
         {
             UIMap.SetActive(true);
@@ -99,7 +113,7 @@ public class MainMenu : MonoBehaviour
             GameObject.Find("Button Shop").GetComponent<Button>().interactable = true;
         }
 
-        if (StaminaValue <= 0)
+        if (StaminaValue <= 4)
         {
             ButtonGamePlay.GetComponent<Button>().enabled = false;
         }
@@ -114,6 +128,13 @@ public class MainMenu : MonoBehaviour
         moneyBear += AddMoneyBear;
         PlayerPrefs.SetInt("CurrentMoney", moneyBear);
         MoneyBearText.text = "" + moneyBear;
+    }
+
+    public void AddSoul(int AddSoul)
+    {
+        Soul += AddSoul;
+        PlayerPrefs.SetInt("Soul",Soul);
+        GemText.text = "" + Soul;
     }
 
     public void UIMapOn()
@@ -150,12 +171,12 @@ public class MainMenu : MonoBehaviour
 
     public void UISttingOn()
     {
-        UISetting.SetActive(true);
+        UISetting.GetComponent<Canvas>().enabled = true;
     }
 
     public void UISttingOff()
     {
-        UISetting.SetActive(false);
+        UISetting.GetComponent<Canvas>().enabled = false;
     }
 
     public void GameStart()
@@ -169,6 +190,10 @@ public class MainMenu : MonoBehaviour
         LevelSyStemInGame.LevelInGame = 1;
         LevelSyStemInGame.EXPInGame = 0;
         LevelSyStemInGame.MaxEXPInGame = 10;
+        DamageText.DamageSwordOn = false;
+        DamageText.DamageFireOn = false;
+        DamageText.DamagePoisonOn = false;
+        DamageText.DamageShockOn = false;
     }
 
     private void OnApplicationFocus()
@@ -194,5 +219,11 @@ public class MainMenu : MonoBehaviour
         }
         print("Pause" + pause);
         
+    }
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Soul",Soul);
+        PlayerPrefs.Save();
     }
 }

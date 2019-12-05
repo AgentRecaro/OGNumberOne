@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     public static float Armor;
     public static float MaxHp;
     public static float defospeed;
+    public static bool MomentSkillComBoSOn;
+    public static float DamageEnemy;
     private FixedJoystick _joystick;
     private float turnSmoothVelocity = 0.2f;
     private bool PlayerDie = false;
@@ -29,11 +31,13 @@ public class PlayerMovement : MonoBehaviour
     //[SerializeField] private GameObject _Archer = null;
     //[SerializeField] private GameObject _Arrow = null;
     //[SerializeField] private float speedPlayer = 5;
-    [SerializeField] private float DamageEnemy = 0;
+    //[SerializeField] private float DamageEnemy = 0;
     [SerializeField] private Slider HealthBarPlayer;
     [SerializeField] private Vector3 input;
     //[SerializeField] private float range = 0;
     //[SerializeField] private float distanceEnemy = 0;
+    [SerializeField] private Image ColorJoy = null;
+    [SerializeField] private Image ColorHandle = null;
 
     private void Start()
     { 
@@ -44,6 +48,9 @@ public class PlayerMovement : MonoBehaviour
         _movement = GameObject.FindGameObjectWithTag("Unicon").GetComponent<Animator>();
         HealthBarPlayer = GameObject.FindGameObjectWithTag("HPBar").GetComponent<Slider>();
         _Sword = GameObject.FindGameObjectWithTag("Sword");
+        ColorJoy = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Image>();
+        ColorHandle = GameObject.FindGameObjectWithTag("JoystickHandle").GetComponent<Image>();
+        GameObject.FindGameObjectWithTag("ButtonSkillComBoS").GetComponent<Button>().onClick.AddListener(SkillComBoSOn);
         //defospeed = speedPlayer;
         HealthBarPlayer.maxValue = MaxHp;
         HealthBarPlayer.value = Hp;
@@ -78,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         { 
         }
         HealthBarPlayer.value = Hp;
+        _movement.SetBool("SkillComBoS", MomentSkillComBoSOn);
     }
 
     public void _AttackSword()
@@ -100,6 +108,7 @@ public class PlayerMovement : MonoBehaviour
            // StartCoroutine(_time());
         //}
         movementPlayer = false;
+        
     }
     
     public void _rollPlayer()
@@ -111,6 +120,13 @@ public class PlayerMovement : MonoBehaviour
             _movement.SetBool("Roll", true);
             StartCoroutine(_timeroll());
         }
+    }
+
+    public void SkillComBoSOn()
+    {
+        MomentSkillComBoSOn = true;
+        EventComboGame.SkillComBoSOn = false;
+        EventComboGame.ValueReTimeButton = 1;
     }
 
     IEnumerator _timeroll()
@@ -142,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
             DamageEnemy = DamageEnemy - Armor;
             Hp = Hp - DamageEnemy;
             Debug.Log("<color=red>PlayerDie GameOver</color>");
+            print(DamageEnemy);
         }
     }
 
@@ -166,6 +183,8 @@ public class PlayerMovement : MonoBehaviour
                                             transform.Translate(transform.forward * speedPlayer * Time.deltaTime, Space.World);
                 _movement.SetBool("Run", true);
                 roll = true;
+                ColorJoy.GetComponent<Image>().color = new Color32(60,60,60,90);
+                ColorHandle.GetComponent<Image>().color = new Color32(173,68,68,90);
             }
             else
             {
@@ -173,6 +192,8 @@ public class PlayerMovement : MonoBehaviour
                 _movement.SetBool("Run", false);
                 _movement.SetBool("Idle", true);
                 Hp += RegenHp * Time.deltaTime;
+                ColorJoy.GetComponent<Image>().color = new Color32(60,60,60,255);
+                ColorHandle.GetComponent<Image>().color = new Color32(173,68,68,255);
             }
         }
     }

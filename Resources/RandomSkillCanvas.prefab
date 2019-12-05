@@ -289,7 +289,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2630378766727391620}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -355,13 +355,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ButtonSkill: []
-  CanvasButton: {fileID: 3332659672165831843}
   ButtonPivot:
   - {fileID: 2979797099644592148}
   - {fileID: 44114641398416289}
   - {fileID: 8561506217931793663}
   NumberList: 000000000000000000000000
   gameObjectsList: []
+  Fire: {fileID: 316709836519553064, guid: 04a7635b7ad6f0b428d46e3231c45ed1, type: 3}
 --- !u!1 &3332659672165831843
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
+    public static float DamageArrow;
     [SerializeField] private float Speed = 0;
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class Arrow : MonoBehaviour
         if (Enemy.gameObject.tag == "Player")
         {
             Destroy(gameObject);
-            PlayerMovement.Hp = PlayerMovement.Hp - 20;
+            PlayerMovement.Hp = PlayerMovement.Hp - DamageArrow;
         }
     }
 }
